@@ -1,0 +1,17 @@
+{% extends './layout.html' %} 
+
+{% block body %} 
+    <h1>Formulario ver un excel</h1>
+    <form action="{{ url_for('submit_form_ver') }}" method="post">
+        <label for="nombre">Nombre Excel:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    {% if dataVerExcel.estado == '200' %}
+        <h1>ESTA ES LA FKIN URL => <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> CLICKEAME AAAAAAAAAAAAAA </a> </h1>
+    {% else %}
+        <h1>NO SE ENCONTRÓ TU VAINA LOCO XDDDDDDDDDDDDDD</h1>
+    {% endif %}
+{% endblock %}
+

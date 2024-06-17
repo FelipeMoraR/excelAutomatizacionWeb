@@ -1,0 +1,18 @@
+{% extends './layout.html' %} 
+
+{% block title %} 
+    inicio
+{% endblock %}
+
+{% block body %} 
+    <a href="verExcel">Ver</a>
+    <a href="modificarExcel">Modificar</a>
+    <a href="crearExcel">Crear</a>
+{% endblock %}
+
+
+
+{% block scripts %}
+    <script src = "{{ url_for('static', filename = 'js/layout.js') }}"> 
+    </script>
+{% endblock %}
