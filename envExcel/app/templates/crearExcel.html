@@ -1,0 +1,18 @@
+{% extends './layout.html' %} 
+
+{% block body %} 
+    <h1>Formulario crear un excel</h1>
+    <form action="{{ url_for('submit_form_crear') }}" method="post">
+        <label for="nombre">Nombre Excel:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
+    {% if dataCrearExcel.estado == '' %}
+        <h1>No pasa nada</h1>
+    {% elif dataCrearExcel.estado  == '200' %}
+        <h1>ESTA ES LA FKIN URL => <a href = "{{dataCrearExcel.urlExcel}}" target = "_blank"> CLICKEAME para ver AA </a> </h1>
+    {% else %}
+        <h1>Error al crear un excel</h1>
+    {% endif %}
+{% endblock %}

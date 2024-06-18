@@ -31,7 +31,13 @@ def index():
 
 @app.route('/verExcel')
 def verExcel():
-    return render_template('verExcel.html')
+
+    dataVerExcel = {
+        'estado': '',
+        'urlExcel': ''
+    }
+
+    return render_template('verExcel.html', dataVerExcel = dataVerExcel)
 
 
 @app.route('/submit_form_ver', methods=['POST'])
@@ -46,28 +52,56 @@ def submit_form_ver():
                 'estado': '200',
                 'urlExcel': urlExcel
             }
-            
-            return render_template('verExcel.html', dataVerExcel = dataVerExcel)
         else:
             dataVerExcel = {
                 'estado': '404',
                 'urlExcel': ''
             }
 
-            return render_template('verExcel.html', dataVerExcel = dataVerExcel)
+        return render_template('verExcel.html', dataVerExcel = dataVerExcel)
        
         
         
     return 'Error al enviar el formulario'
 
 
+@app.route('/crearExcel')
+def crearExcel():
+    dataCrearExcel = {
+                'estado': '',
+                'urlExcel': ''
+            }
+    
+    return render_template('crearExcel.html', dataCrearExcel = dataCrearExcel)
+
+
+@app.route('/submit_form_crear', methods=['POST'])
+def submit_form_crear():
+    if request.method == 'POST':
+        nombre = request.form['nombre']     
+        
+        if googleSheet.crearExcel(nombre, cliente, drive_service, sheets_service):
+            excelCreado = googleSheet.obtenerExcel(nombre, drive_service)
+            urlExcelCreado = googleSheet.obtener_url_archivo(excelCreado['id'], drive_service)
+
+            dataCrearExcel = {
+                'estado': '200',
+                'urlExcel': urlExcelCreado
+            }
+        else:
+            dataCrearExcel = {
+                'estado': '404',
+                'urlExcel': ''
+            }
+            
+        return render_template('crearExcel.html', dataCrearExcel = dataCrearExcel)
+    
+    return 'Error al enviar el formulario'
+
 @app.route('/modificarExcel')
 def modificarExcel():
     return render_template('modificarExcel.html')
 
-@app.route('/crearExcel')
-def crearExcel():
-    return render_template('crearExcel.html')
 
 
 #Este es un ejemplo
