@@ -99,10 +99,72 @@ def submit_form_crear():
     
     return 'Error al enviar el formulario'
 
+
+
 @app.route('/modificarExcel')
 def modificarExcel():
-    return render_template('modificarExcel.html')
+    dataModificarExcel = {
+                'estado': '',
+                'siguienteNivel': '1',
+                'excelId': ''
+            }
+    
 
+    return render_template('modificarExcel.html', data = dataModificarExcel)
+
+@app.route('/submit_form_modificar', methods=['POST'])
+def submit_form_modificar():
+    if request.method == 'POST':
+        nombreExcel = request.form['nombre']     
+        accion = request.form['accion']     
+        hojaCalculo = request.form['hojaCalculo']
+        
+        if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
+            excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
+
+            if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
+                print('No se encontró nada')
+                dataModificarExcel = {
+                    'estado': '404',
+                    'error': 'No se econtró la hoja de calculo',
+                    'siguienteNivel': '',
+                    'excelId': '',
+                    'nombreHojaCalculo': '',
+                    'accion': '',
+                    }
+                
+                return render_template('modificarExcel.html', data = dataModificarExcel)
+
+            dataModificarExcel = {
+                    'estado': '200',
+                    'error': '',
+                    'siguienteNivel': '2',
+                    'excelId': excel['id'],
+                    'accion': accion,
+                    'nombreHojaCalculo': hojaCalculo,
+                    
+                }
+            
+            return render_template('modificarExcel.html', data = dataModificarExcel)
+
+        else:
+            dataModificarExcel = {
+                    'estado': '404',
+                    'error': 'Excel no existe',
+                    'siguienteNivel': '',
+                    'excelId': '',
+                    'accion': '',
+                    'nombreHojaCalculo': '',
+                    
+            }
+
+        return render_template('modificarExcel.html', data = dataModificarExcel)
+            
+    
+    return 'Error al enviar el formulario'
+
+
+            
 
 
 #Este es un ejemplo

@@ -1,0 +1,44 @@
+{% extends './layout.html' %} 
+
+{% block body %} 
+    
+
+    {% if data.estado == '' %}
+        <h1>Formulario modificar un excel Paso 1</h1>
+        <form action="{{ url_for('submit_form_modificar') }}" method="post">
+            <label for="nombre">Nombre Excel:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="agregar">Agregar un gasto</label>
+            <input type="radio" id="agregar" name="accion" value = "agregar" checked><br><br>
+
+            <label for="eliminar">Eliminar un gasto</label>
+            <input type="radio" id="eliminar" name="accion" value = "eliminar" ><br><br>
+
+            <label for="hojaCalculo">Ingrese Hoja de calculo</label>
+            <input type="text" id = "hojaCalculo" name = "hojaCalculo"> <br><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+    {% elif data.estado  == '200' %}
+        <h1>Si pasó</h1>     
+    {% else %}
+        <h1> Error {{data.estado}}: {{data.error}} </h1>
+        <h1>Formulario modificar un excel Paso 1</h1>
+        <form action="{{ url_for('submit_form_modificar') }}" method="post">
+            <label for="nombre">Nombre Excel:</label>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="agregar">Agregar un gasto</label>
+            <input type="radio" id="agregar" name="accion" value = "agregar" checked><br><br>
+
+            <label for="eliminar">Eliminar un gasto</label>
+            <input type="radio" id="eliminar" name="accion" value = "eliminar" ><br><br>
+
+            <label for="hojaCalculo">Ingrese Hoja de calculo</label>
+            <input type="text" id = "hojaCalculo" name = "hojaCalculo"> <br><br>
+
+            <input type="submit" value="Enviar">
+        </form>
+    {% endif %}
+{% endblock %}
