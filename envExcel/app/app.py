@@ -145,7 +145,7 @@ def submit_form_modificar():
                     
                 }
             
-            return render_template('modificarExcel.html', data = dataModificarExcel)
+            return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
 
         else:
             dataModificarExcel = {
@@ -165,6 +165,76 @@ def submit_form_modificar():
 
 
             
+@app.route('/submit_form_modificar_p2', methods=['POST'])
+def submit_form_modificar_p2():
+    conjutoFilasAgregar = []
+    filasAgregar = []
+
+    if request.method == 'POST':
+        id_excel = request.form['id_excel']
+        nombre_hoja = request.form['nombre_hoja']
+        accion = request.form['accion']
+        nombre_gasto = request.form.getlist('nombre_gasto')
+        
+
+
+        if accion == 'agregar':
+            precio_gasto = request.form.getlist('precio_gasto')
+
+            for nombre, precio in zip(nombre_gasto,precio_gasto):
+                filasAgregar.append(nombre)
+                filasAgregar.append(precio)
+                conjutoFilasAgregar.append(filasAgregar.copy())
+                filasAgregar.clear()
+                
+            try:
+                googleSheet.agregarNuevasFilas(id_excel, nombre_hoja, conjutoFilasAgregar, cliente)
+
+                return render_template('index.html')
+            
+            except Exception as e:
+                print(f'Ocurrio un error al intentar agregar nuevas filas. ERROR => {e}')
+                return render_template('index.html')
+                
+        elif accion == 'eliminar':
+            
+            try:
+                filasEliminar = googleSheet.identificarValoresFilasEliminar(id_excel, nombre_hoja , nombre_gasto[0], cliente) #SE IDENTIFICA QUE FILAS(NUEMROS) SE VAN A ELIMINAR
+                print(filasEliminar)
+                if len(filasEliminar) == 0:
+                    dataModificarExcel = {
+                        'estado': '204',
+                        'error': 'No existen elementos dentro del excel',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': '',
+                        'nombreHojaCalculo': '',
+                    
+                    }
+                    return render_template('modificarExcel.html', data = dataModificarExcel)
+                else:
+                    dataModificarExcel = {
+                        'estado': '200',
+                        'error': '',
+                        'siguienteNivel': '3',
+                        'filasElimianr': filasEliminar
+                    }
+
+                    return render_template('modificarExcelPaso3.html', data = dataModificarExcel)
+            except Exception as e:
+                print(f'Ocurrió un error al identificar las filas a elimianr. Error => {e}')  
+                return render_template('index.html')          
+        
+        else:
+            print('error lectura accion')
+        
+
+
+       
+        
+    
+    return 'Error al enviar el formulario'
+
 
 
 #Este es un ejemplo

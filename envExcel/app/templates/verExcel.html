@@ -1,6 +1,8 @@
 {% extends './layout.html' %} 
 
 {% block body %} 
+    <a href="/">Volver home</a>
+
     <h1>Formulario ver un excel</h1>
     <form action="{{ url_for('submit_form_ver') }}" method="post">
         <label for="nombre">Nombre Excel:</label>

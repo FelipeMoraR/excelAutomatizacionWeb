@@ -1,0 +1,47 @@
+{% extends './layout.html' %} 
+
+
+
+{% block scripts %}  <script src = "{{ url_for('static', filename = 'js/layout.js') }}"> </script> {% endblock %}
+
+{% block body %} 
+        <a href="/">Volver home</a>
+        {% if data.accion == 'agregar' %}
+            <h1>Formulario modificar un excel Paso 2 AGREGAR</h1>
+            <form action="{{ url_for('submit_form_modificar_p2') }}" method="post">
+                <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
+                <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
+                <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
+                <div id = "input-container">
+                    <input type="text" name="nombre_gasto" placeholder = "Nombre" required>
+                    <input type="number" name="precio_gasto" placeholder="Precio 1" required>
+                    <br>
+                </div>
+                
+
+                <input type="submit" value="Enviar">
+
+                <button type = "button" onclick = "addInputAgregar()">Agregar gasto</button>
+
+                
+            </form>
+        {% elif data.accion == 'eliminar' %}
+            <h1>Formulario modificar un excel Paso 2 ELIMINAR</h1>
+            <form action="{{ url_for('submit_form_modificar_p2') }}" method="post">
+                <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
+                <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
+                <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
+                <div id = "input-container">
+                    <input type="text" name="nombre_gasto" placeholder = "Nombre" required>
+                    <br>
+                </div>
+                
+
+                <input type="submit" value="Enviar">
+
+               
+
+                
+            </form>
+        {% endif %}
+{% endblock %}
