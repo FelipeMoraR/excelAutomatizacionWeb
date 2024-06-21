@@ -354,6 +354,7 @@ def formateoValoresPorEliminar(excel_id, hoja_trabajo_nombre, filas, cliente):
 
 
 def eliminarFilas(excel_id, hoja_trabajo_nombre, filas, numero_fila_eliminar, cliente):
+    
     try:
         # Abrir la hoja de cálculo por ID
         excel = cliente.open_by_key(excel_id)

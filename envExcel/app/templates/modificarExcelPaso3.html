@@ -1,5 +1,28 @@
 {% extends './layout.html' %} 
 
 {% block body %} 
-    <h1>Estas en el paso 3 {{data.filasElimianr}} </h1>
+    <h1>Valores encontrados nombre,valor</h1>
+    <div style = "white-space: pre-line;"> {{data.filasEliminarFormateadas}} </div>
+
+
+    <h1>Formulario modificar un excel Paso 3 ELIMINAR</h1>
+    <h2>Seleccione una posicion</h2>
+            <form action="{{ url_for('submit_form_modificar_p3') }}" method="post">
+                <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
+                <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
+                <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly> 
+                <input type="text" name = "filasEliminar" value = "{{data.filasEliminar}}" hidden readonly> 
+                
+                <div id = "input-container">
+                    <input type="number" name="posicion_gasto" placeholder = "Posicion" required>
+                    <br>
+                </div>
+                
+
+                <input type="submit" value="Enviar">
+
+               
+
+                
+            </form>
 {% endblock %}

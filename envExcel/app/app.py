@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect
 import sys
 import os
+import  ast
 
 # Añadir el directorio raíz del proyecto al PYTHONPATH
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -200,7 +201,8 @@ def submit_form_modificar_p2():
             
             try:
                 filasEliminar = googleSheet.identificarValoresFilasEliminar(id_excel, nombre_hoja , nombre_gasto[0], cliente) #SE IDENTIFICA QUE FILAS(NUEMROS) SE VAN A ELIMINAR
-                print(filasEliminar)
+                filasEliminarFormateadas = googleSheet.formateoValoresPorEliminar(id_excel, nombre_hoja, filasEliminar, cliente)
+                print(filasEliminarFormateadas)
                 if len(filasEliminar) == 0:
                     dataModificarExcel = {
                         'estado': '204',
@@ -217,7 +219,11 @@ def submit_form_modificar_p2():
                         'estado': '200',
                         'error': '',
                         'siguienteNivel': '3',
-                        'filasElimianr': filasEliminar
+                        'excelId':  id_excel,
+                        'accion': 'eliminar',
+                        'nombreHojaCalculo': nombre_hoja,
+                        'filasEliminar': filasEliminar,
+                        'filasEliminarFormateadas': filasEliminarFormateadas
                     }
 
                     return render_template('modificarExcelPaso3.html', data = dataModificarExcel)
@@ -233,6 +239,46 @@ def submit_form_modificar_p2():
        
         
     
+    return 'Error al enviar el formulario'
+
+
+
+@app.route('/submit_form_modificar_p3', methods=['POST'])
+def submit_form_modificar_p3():
+
+    if request.method == 'POST':
+        id_excel = request.form['id_excel']
+        nombre_hoja = request.form['nombre_hoja']
+        accion = request.form['accion']
+        filasEliminar = request.form['filasEliminar'] #Aqui llega como string
+        arrayFilasEliminar = ast.literal_eval(filasEliminar)
+        posicion_gasto = int(request.form['posicion_gasto'])
+       
+        try:
+            googleSheet.eliminarFilas(id_excel, nombre_hoja, arrayFilasEliminar, posicion_gasto, cliente)
+            dataModificarExcel = {
+                    'estado': '200',
+                    'error': '',
+                    'siguienteNivel': '1',
+                    'excelId': '',
+                    'accion': '',
+                    'nombreHojaCalculo': '',
+                    
+                }
+            return render_template('index.html', data = dataModificarExcel)
+        except Exception as e:
+            print('ERROR AL ELIMINAR ESTA VAINA => ', e)
+            dataModificarExcel = {
+                    'estado': '400',
+                    'error': 'Error al realizar la eliminacion',
+                    'siguienteNivel': '2',
+                    'excelId': id_excel,
+                    'accion': accion,
+                    'nombreHojaCalculo': nombre_hoja,
+                    
+                }
+            return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
+            
     return 'Error al enviar el formulario'
 
 
