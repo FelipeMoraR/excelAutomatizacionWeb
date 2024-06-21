@@ -342,7 +342,7 @@ def formateoValoresPorEliminar(excel_id, hoja_trabajo_nombre, filas, cliente):
             valores_limpios.append(valores_fila)
         
         for index, valor in enumerate(valores_limpios):
-            mensaje = "Posición {}: {}\n".format(index, ", ".join(valor))
+            mensaje = "Posición {}: {}\n".format(index, ", $".join(valor))
             mensajes += mensaje 
         
         return mensajes

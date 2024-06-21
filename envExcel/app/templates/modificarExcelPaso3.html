@@ -1,5 +1,8 @@
 {% extends './layout.html' %} 
 
+
+
+
 {% block body %} 
     <h1>Valores encontrados nombre,valor</h1>
     <div style = "white-space: pre-line;"> {{data.filasEliminarFormateadas}} </div>
@@ -14,15 +17,22 @@
                 <input type="text" name = "filasEliminar" value = "{{data.filasEliminar}}" hidden readonly> 
                 
                 <div id = "input-container">
-                    <input type="number" name="posicion_gasto" placeholder = "Posicion" required>
+                    <label for="posicion_gasto">Ingrese posicion</label>
+                    <input type="number" min = 0 id = "posicion_gasto" name="posicion_gasto" placeholder = "Posicion" required>
                     <br>
                 </div>
                 
 
-                <input type="submit" value="Enviar">
+                <input type="submit" id = "enviar" value="Enviar">
 
                
 
                 
             </form>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src = "{{ url_for('static', filename = 'js/test.js') }}"> 
+    </script>
 {% endblock %}

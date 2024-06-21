@@ -31,8 +31,10 @@
                 <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
                 <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
                 <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
+
                 <div id = "input-container">
-                    <input type="text" name="nombre_gasto" placeholder = "Nombre" required>
+                    <label for="nombre_gasto">Ingrese el nombre del gasto</label>
+                    <input type="text" id = "nombre_gasto" name="nombre_gasto" placeholder = "Nombre" required>
                     <br>
                 </div>
                 
@@ -44,4 +46,10 @@
                 
             </form>
         {% endif %}
+
+        
+        {% if data.estado == '400' or data.estado == '404' %}
+            <h1> {{ data.error }}</h1>
+        {% endif %}
+            
 {% endblock %}

@@ -8,6 +8,14 @@
     <a href="verExcel">Ver</a>
     <a href="modificarExcel">Modificar</a>
     <a href="crearExcel">Crear</a>
+
+    
+    {% if data.estado == '200' and data.accion == 'eliminar'%}
+        <h1>Elemento eliminado</h1>  
+    {% elif data.estado == '200' and data.accion == 'agregar' %}  
+        <h1>Elemento/s agregado/s</h1>
+    {% endif %}
+        
 {% endblock %}
 
 
