@@ -131,47 +131,106 @@ def submit_form_modificar():
         nombreExcel = request.form['nombre']     
         accion = request.form['accion']     
         hojaCalculo = request.form['hojaCalculo']
-        
-        if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
-            excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
 
-            if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
-                print('No se encontró nada')
-                dataModificarExcel = {
-                    'estado': '404',
-                    'error': 'No se econtró la hoja de calculo',
-                    'siguienteNivel': '',
-                    'excelId': '',
-                    'nombreHojaCalculo': '',
-                    'accion': '',
-                    }
+        if accion == 'eliminarHoja' or accion == 'agregarHoja':
+            if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
+                excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
                 
-                return render_template('modificarExcel.html', data = dataModificarExcel)
-
-            dataModificarExcel = {
-                    'estado': '200',
-                    'error': '',
-                    'siguienteNivel': '2',
-                    'excelId': excel['id'],
-                    'accion': accion,
-                    'nombreHojaCalculo': hojaCalculo,
+                if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) != None and accion != 'eliminarHoja':
+                    print('Se encontró')
+                    dataModificarExcel = {
+                        'estado': '406',
+                        'error': 'Se encontró la hoja de calculo, debes usar un nombre inexistente',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'nombreHojaCalculo': '',
+                        'accion': '',
+                        }
                     
+                    return render_template('modificarExcel.html', data = dataModificarExcel)
+                
+                if accion == 'eliminarHoja':
+                    googleSheet.eliminarHoja(excel['id'], hojaCalculo, sheets_service)
+                    dataModificarExcel = {
+                        'estado': '200',
+                        'error': '',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': 'eliminarHoja',
+                        'nombreHojaCalculo': '',
+                    
+                    }
+                    return render_template('index.html', data = dataModificarExcel)
+                
+                else:
+                    googleSheet.crearNuevaHoja(excel['id'], hojaCalculo, sheets_service, cliente)
+
+                    dataModificarExcel = {
+                        'estado': '200',
+                        'error': '',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': 'agregarHoja',
+                        'nombreHojaCalculo': '',
+                    
+                    }
+
+                    return render_template('index.html', data = dataModificarExcel)
+            else:
+                dataModificarExcel = {
+                        'estado': '404',
+                        'error': 'Excel no existe',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': '',
+                        'nombreHojaCalculo': '',
+                        
                 }
-            
-            return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
+
+            return render_template('modificarExcel.html', data = dataModificarExcel)   
+        
 
         else:
-            dataModificarExcel = {
-                    'estado': '404',
-                    'error': 'Excel no existe',
-                    'siguienteNivel': '',
-                    'excelId': '',
-                    'accion': '',
-                    'nombreHojaCalculo': '',
+            if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
+                excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
+            
+                if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
+                    print('No se encontró nada')
+                    dataModificarExcel = {
+                        'estado': '404',
+                        'error': 'No se econtró la hoja de calculo',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'nombreHojaCalculo': '',
+                        'accion': '',
+                        }
                     
-            }
+                    return render_template('modificarExcel.html', data = dataModificarExcel)
 
-        return render_template('modificarExcel.html', data = dataModificarExcel)
+                dataModificarExcel = {
+                        'estado': '200',
+                        'error': '',
+                        'siguienteNivel': '2',
+                        'excelId': excel['id'],
+                        'accion': accion,
+                        'nombreHojaCalculo': hojaCalculo,
+                        
+                    }
+                
+                return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
+
+            else:
+                dataModificarExcel = {
+                        'estado': '404',
+                        'error': 'Excel no existe',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': '',
+                        'nombreHojaCalculo': '',
+                        
+                }
+
+            return render_template('modificarExcel.html', data = dataModificarExcel)
             
     
     return 'Error al enviar el formulario'
