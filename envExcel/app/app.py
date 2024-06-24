@@ -11,10 +11,7 @@ import googleSheet
 
 app = Flask(__name__)
 
-port = config('PORT', default=5021)
 
-if not port:
-    port = 5021 
 
 sheets_service = googleSheet.conexionSheetBuildService()
 
@@ -361,4 +358,4 @@ def pagina_no_encontrada(error):
 if __name__ == '__main__':
     app.add_url_rule('/query_string', view_func = query_string)
     app.register_error_handler(404, pagina_no_encontrada)
-    app.run(debug = True, port = port)
+    app.run(debug = True, port = os.getenv("PORT", default=5000))
