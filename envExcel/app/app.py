@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect
 import sys
 import os
 import  ast
+from decouple import config
 
 # Añadir el directorio raíz del proyecto al PYTHONPATH
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -9,6 +10,11 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import googleSheet
 
 app = Flask(__name__)
+
+port = config('PORT', default=5021)
+
+if not port:
+    port = 5021 
 
 sheets_service = googleSheet.conexionSheetBuildService()
 
@@ -355,4 +361,4 @@ def pagina_no_encontrada(error):
 if __name__ == '__main__':
     app.add_url_rule('/query_string', view_func = query_string)
     app.register_error_handler(404, pagina_no_encontrada)
-    app.run(debug = True, port = 5021)
+    app.run(debug = True, port = port)
