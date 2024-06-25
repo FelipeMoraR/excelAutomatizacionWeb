@@ -56,8 +56,8 @@ def verExcel():
 @app.route('/submit_form_ver', methods=['POST'])
 def submit_form_ver():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-
+        nombre = request.form['nombre'].lower()
+        
         if googleSheet.verificarExistenciaExcel(nombre, drive_service):
             excel = googleSheet.obtenerExcel(nombre, drive_service)
             urlExcel = googleSheet.obtener_url_archivo(excel['id'], drive_service)
@@ -92,7 +92,7 @@ def crearExcel():
 @app.route('/submit_form_crear', methods=['POST'])
 def submit_form_crear():
     if request.method == 'POST':
-        nombre = request.form['nombre']     
+        nombre = request.form['nombre'].lower()     
         
         if googleSheet.crearExcel(nombre, cliente, drive_service, sheets_service):
             excelCreado = googleSheet.obtenerExcel(nombre, drive_service)
@@ -100,11 +100,13 @@ def submit_form_crear():
 
             dataCrearExcel = {
                 'estado': '200',
+                'error': '',
                 'urlExcel': urlExcelCreado
             }
         else:
             dataCrearExcel = {
                 'estado': '404',
+                'error': 'El excel ya existe',
                 'urlExcel': ''
             }
             
@@ -128,9 +130,9 @@ def modificarExcel():
 @app.route('/submit_form_modificar', methods=['POST'])
 def submit_form_modificar():
     if request.method == 'POST':
-        nombreExcel = request.form['nombre']     
+        nombreExcel = request.form['nombre'].lower()     
         accion = request.form['accion']     
-        hojaCalculo = request.form['hojaCalculo']
+        hojaCalculo = request.form['hojaCalculo'].lower()
 
         if accion == 'eliminarHoja' or accion == 'agregarHoja':
             if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
@@ -244,7 +246,7 @@ def submit_form_modificar_p2():
 
     if request.method == 'POST':
         id_excel = request.form['id_excel']
-        nombre_hoja = request.form['nombre_hoja']
+        nombre_hoja = request.form['nombre_hoja'].lower()
         accion = request.form['accion']
         nombre_gasto = request.form.getlist('nombre_gasto')
         
@@ -254,8 +256,8 @@ def submit_form_modificar_p2():
             precio_gasto = request.form.getlist('precio_gasto')
 
             for nombre, precio in zip(nombre_gasto,precio_gasto):
-                filasAgregar.append(nombre)
-                filasAgregar.append(precio)
+                filasAgregar.append(nombre.lower())
+                filasAgregar.append(precio.lower())
                 conjutoFilasAgregar.append(filasAgregar.copy())
                 filasAgregar.clear()
                 

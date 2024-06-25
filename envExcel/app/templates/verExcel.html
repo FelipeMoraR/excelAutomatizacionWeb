@@ -4,7 +4,14 @@
     
         <a href="/" class = "boton-volver">Volver home</a>
 
-        
+        {% if dataVerExcel.estado == '' %}
+            <h2 class = "resultado-estado-excel">Aun no has buscado nada</h2>
+        {% elif dataVerExcel.estado  == '200' %}
+            <h2 class = "resultado-estado-excel">URL => <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> Link </a> </h2>
+        {% else %}
+            <h2 class = "resultado-estado-excel">No se ha encontrado nada</h2>
+        {% endif %}
+
         <form action="{{ url_for('submit_form_ver') }}" method="post" class = "formulario-excel">
             <h1>Formulario ver un excel</h1>
 
@@ -22,12 +29,6 @@
                 
         </form>
 
-        {% if dataVerExcel.estado == '' %}
-            <h2 class = "resultado-estado-excel">Aun no has buscado nada</h2>
-        {% elif dataVerExcel.estado  == '200' %}
-            <h2 class = "resultado-estado-excel">URL => <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> Link </a> </h2>
-        {% else %}
-            <h2 class = "resultado-estado-excel">No se ha encontrado nada</h2>
-        {% endif %}
+        
 {% endblock %}
 

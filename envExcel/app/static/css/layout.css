@@ -18,6 +18,18 @@
     justify-content: center;
 }
 
+.justify-content-space-between{
+    justify-content: space-between;
+}
+
+.align-items-center{
+    align-items: center;
+}
+
+.gap-05{
+    gap: .5rem;
+}
+
 .gap-1{
     gap: 1rem;
 }
@@ -38,8 +50,12 @@
     gap: 5rem;
 }
 
+.flex-1{
+    flex: 1;
+}
+
 body{
-    background-color: peru;
+    background-color: #A7FA73;
 }
 
 nav{
@@ -94,8 +110,8 @@ nav a:active, .boton-volver:active{
     gap: 2rem;
     padding: .5rem 1rem;
     background-color: #A7FA73;
-    height: 70vh;
     justify-content: center;
+    min-height: 500px;
 }
 
 .formulario-excel h1{
@@ -109,8 +125,8 @@ nav a:active, .boton-volver:active{
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 30vh;
     gap: .5rem;
+    min-height: 200px;
 }
 
 input[type = "text"], input[type = "number"]{
@@ -136,4 +152,22 @@ input[type = "submit"]{
 
 input[type = "submit"]:active{
     background: #8fc966;
+}
+
+.agregar-gasto:active{
+    background: #2f600d;
+}
+
+.agregar-gasto{
+    background: #27371c;
+    color: white;
+    outline: none;
+    border: none;
+    width: 50%;
+    padding: 8px 4px;
+}
+
+
+.input-paso2{
+    width: 49%;
 }

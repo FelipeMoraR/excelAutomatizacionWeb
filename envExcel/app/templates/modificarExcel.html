@@ -1,58 +1,101 @@
 {% extends './layout.html' %} 
 
 {% block body %} 
-    
-    <a href="/">Volver home</a>
-    {% if data.estado == '' %}
-        <h1>Formulario modificar un excel Paso 1</h1>
-        <form action = "{{ url_for('submit_form_modificar') }}" method = "post">
-            <label for = "nombre">Nombre Excel:</label>
-            <input type = "text" id = "nombre" name = "nombre" required><br><br>
-
-            <label for = "agregar">Agregar un gasto</label>
-            <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked><br><br>
-
-            <label for = "eliminar">Eliminar un gasto</label>
-            <input type = "radio" id = "eliminar" name = "accion" value = "eliminar" ><br><br>
-
-            <label for = "agregarHoja">Agregar una hoja de calculo</label>
-            <input type = "radio" id = "agregarHoja" name = "accion" value = "agregarHoja" ><br><br>
-
-            <label for = "eliminarHoja">Eliminar una hoja de calculo</label>
-            <input type = "radio" id = "eliminarHoja" name = "accion" value = "eliminarHoja" ><br><br>
-
-            <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
-            <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> <br><br>
-
-            <input type = "submit" value = "Enviar">
-        </form>
-    {% elif data.estado  == '200' %}
-        <h1>Si pasó</h1>     
-    {% else %}
-        <h1> Error {{data.estado}}: {{data.error}} </h1>
-        <h1>Formulario modificar un excel Paso 1</h1>
-        <form action = "{{ url_for('submit_form_modificar') }}" method = "post">
-            <label for = "nombre">Nombre Excel:</label>
-            <input type = "text" id = "nombre" name = "nombre" required><br><br>
-
-            <label for = "agregar">Agregar un gasto</label>
-            <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked><br><br>
-
-            <label for = "eliminar">Eliminar un gasto</label>
-            <input type = "radio" id = "eliminar" name = "accion" value = "eliminar" ><br><br>
-
-            <label for = "agregarHoja">Agregar una hoja de calculo</label>
-            <input type = "radio" id = "agregarHoja" name = "accion" value = "agregarHoja" ><br><br>
+    <div>
+        <a href="/" class = "boton-volver" >Volver home</a>
+        {% if data.estado == '' %}
             
-            <label for = "eliminarHoja">Eliminar una hoja de calculo</label>
-            <input type = "radio" id = "eliminarHoja" name = "accion" value = "eliminarHoja" ><br><br>
+            <form action = "{{ url_for('submit_form_modificar') }}" method = "post" class = "formulario-excel">
+                <h1>Formulario modificar un excel Paso 1</h1>
+                
+                <div class = "d-flex flex-direction-column">
+                    <label for = "nombre">Nombre Excel:</label>
+                    <input type = "text" id = "nombre" name = "nombre" required>
+                </div>
+                    
+                <div class = "d-flex flex-direction-column">
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "agregar">Agregar un gasto</label>
+                        <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked>
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "eliminar">Eliminar un gasto</label>
+                        <input type = "radio" id = "eliminar" name = "accion" value = "eliminar" >
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "agregarHoja">Agregar una hoja de calculo</label>
+                        <input type = "radio" id = "agregarHoja" name = "accion" value = "agregarHoja" >
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "eliminarHoja">Eliminar una hoja de calculo</label>
+                        <input type = "radio" id = "eliminarHoja" name = "accion" value = "eliminarHoja" >
+                    </div>
+                    
+                </div>
+                    
 
-            <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
-            <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> <br><br>
+                    
+                <div class = "d-flex flex-direction-column">
+                    <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
+                    <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> 
+                </div>
+                    
+                <div class = "d-flex justify-content-center">
+                    <input type = "submit" value = "Enviar">
+                </div>
+                
+            </form>
+        {% elif data.estado  == '200' %}
+            <h1>Si pasó</h1>     
+        {% else %}
+            <h2 class = "resultado-estado-excel"> Error {{data.estado}}: {{data.error}} </h2>
+            
+            <form action = "{{ url_for('submit_form_modificar') }}" method = "post" class = "formulario-excel"> 
+                <h1>Formulario modificar un excel Paso 1</h1>
 
-            <input type="submit" value="Enviar">
-        </form>
-    {% endif %}
+                <div class = "d-flex flex-direction-column">
+                    <label for = "nombre">Nombre Excel:</label>
+                    <input type = "text" id = "nombre" name = "nombre" required>
+                </div>
+                    
+                <div class = "d-flex flex-direction-column">
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "agregar">Agregar un gasto</label>
+                        <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked>
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "eliminar">Eliminar un gasto</label>
+                        <input type = "radio" id = "eliminar" name = "accion" value = "eliminar" >
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "agregarHoja">Agregar una hoja de calculo</label>
+                        <input type = "radio" id = "agregarHoja" name = "accion" value = "agregarHoja" >
+                    </div>
+                    
+                    <div class = "flex-1 d-flex align-items-center justify-content-space-between">
+                        <label for = "eliminarHoja">Eliminar una hoja de calculo</label>
+                        <input type = "radio" id = "eliminarHoja" name = "accion" value = "eliminarHoja" >
+                    </div>
+                </div>
+                
+                <div class = "d-flex flex-direction-column">
+                    <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
+                    <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> 
+                </div>
+
+                    
+                <div class = "d-flex justify-content-center">
+                    <input type="submit" value="Enviar">
+                </div>
+                
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}
 
 
