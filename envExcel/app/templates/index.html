@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block body %} 
-    <a href="verExcel">Ver</a>
-    <a href="modificarExcel">Modificar</a>
-    <a href="crearExcel">Crear</a>
+    <nav>
+        <a href="verExcel">Ver Excel</a>
+        <a href="modificarExcel">Modificar Excel</a>
+        <a href="crearExcel">Crear Excel</a>
+    </nav>
+    
 
     
     {% if data.estado == '200' and data.accion == 'eliminar'%}

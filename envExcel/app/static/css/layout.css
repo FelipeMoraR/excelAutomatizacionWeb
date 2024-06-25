@@ -1,3 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
     background-color: peru;
+}
+
+nav{
+   display: flex;
+   flex-direction: column;
+   height: 100vh;
+}
+
+
+nav a{
+    color: black;
+    text-decoration: none;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 48px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+nav a:nth-child(even){
+    background-color: #A7FA73;
+}
+
+nav a:nth-child(odd){ 
+    background-color: #A0CF82;
+}
+
+nav a:hover{
+    color: gray;
+}
+
+nav a:active{
+    color: white;
 }
