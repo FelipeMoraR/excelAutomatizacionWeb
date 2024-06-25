@@ -14,13 +14,13 @@
 
     
     {% if data.estado == '200' and data.accion == 'eliminar'%}
-        <h1>Elemento eliminado</h1>  
+        <h2 class = "resultado-estado-excel" >Elemento eliminado</h2>  
     {% elif data.estado == '200' and data.accion == 'agregar' %}  
-        <h1>Elemento/s agregado/s</h1>
+        <h2 class = "resultado-estado-excel" >Elemento/s agregado/s</h2>
     {% elif data.estado == '200' and data.accion == 'agregarHoja' %}  
-        <h1>Hoja agregada</h1>
+        <h2 class = "resultado-estado-excel" >Hoja agregada</h2>
     {% elif data.estado == '200' and data.accion == 'eliminarHoja' %}  
-        <h1>Hoja eliminada</h1>
+        <h2 class = "resultado-estado-excel" >Hoja eliminada</h2>
     {% endif %}
         
 {% endblock %}

@@ -2,6 +2,40 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+
+.d-flex{
+    display: flex;
+}
+
+.flex-direction-column{
+    flex-direction: column;
+}
+
+.justify-content-center{
+    justify-content: center;
+}
+
+.gap-1{
+    gap: 1rem;
+}
+
+.gap-2{
+    gap: 2rem;
+}
+
+.gap-3{
+    gap: 3rem;
+}
+
+.gap-4{
+    gap: 4rem;
+}
+
+.gap-5{
+    gap: 5rem;
 }
 
 body{
@@ -18,26 +52,88 @@ nav{
 nav a{
     color: black;
     text-decoration: none;
-    font-family: "Bebas Neue", sans-serif;
     font-size: 48px;
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
+}
+
+.boton-volver{
+    color: black;
+    text-decoration: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 }
 
 nav a:nth-child(even){
     background-color: #A7FA73;
 }
 
-nav a:nth-child(odd){ 
+nav a:nth-child(odd), .boton-volver{ 
     background-color: #A0CF82;
 }
 
-nav a:hover{
-    color: gray;
+nav a:hover, .boton-volver:hover{
+    color: rgb(231, 231, 231);
+    background-color: #678454; 
 }
 
-nav a:active{
+nav a:active, .boton-volver:active{
     color: white;
+    background-color: #36462b;
+}
+
+.formulario-excel{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: .5rem 1rem;
+    background-color: #A7FA73;
+    height: 70vh;
+    justify-content: center;
+}
+
+.formulario-excel h1{
+    text-align: center;
+}
+
+
+.resultado-estado-excel{
+    background-color: #FA737A;
+    padding: .5rem 1rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 30vh;
+    gap: .5rem;
+}
+
+input[type = "text"], input[type = "number"]{
+    border: none;
+    padding: 2px 4px;
+    transition: background-color 0.2s ease;
+}
+
+input[type = "text"]:focus, input[type = "number"]:focus{
+    outline: none;
+    background-color: rgb(228, 228, 228);
+    
+}
+
+input[type = "submit"]{
+    background: #567A3D;
+    color: white;
+    outline: none;
+    border: none;
+    width: 50%;
+    padding: 8px 4px;
+}
+
+input[type = "submit"]:active{
+    background: #8fc966;
 }
