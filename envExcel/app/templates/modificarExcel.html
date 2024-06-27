@@ -2,18 +2,24 @@
 
 {% block body %} 
     <div>
-        <a href="/" class = "boton-volver" >Volver home</a>
+        <a href="/" class = "boton-volver">
+            <span class="material-symbols-outlined">
+                arrow_back
+            </span>
+            Volver home
+        </a>
+
         {% if data.estado == '' %}
             
             <form action = "{{ url_for('submit_form_modificar') }}" method = "post" class = "formulario-excel">
-                <h1>Formulario modificar un excel Paso 1</h1>
+                <h1>Formulario modificar un excel</h1>
                 
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <label for = "nombre">Nombre Excel:</label>
                     <input type = "text" id = "nombre" name = "nombre" required>
                 </div>
                     
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <div class = "flex-1 d-flex align-items-center justify-content-space-between">
                         <label for = "agregar">Agregar un gasto</label>
                         <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked>
@@ -38,7 +44,7 @@
                     
 
                     
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
                     <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> 
                 </div>
@@ -51,17 +57,27 @@
         {% elif data.estado  == '200' %}
             <h1>Si pasó</h1>     
         {% else %}
-            <h2 class = "resultado-estado-excel"> Error {{data.estado}}: {{data.error}} </h2>
-            
+            <div id = "overlayResultado" class = "overlay"> </div>
+            <div class = "modal-resultado-container" id = "modalResultado">
+                <div class = "modal-resultado-contenido-error d-flex justify-content-center align-items-center">
+                    <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </div>
+                    
+                    <h2> Error {{data.estado}}: {{data.error}} </h2>
+                </div>
+            </div>
             <form action = "{{ url_for('submit_form_modificar') }}" method = "post" class = "formulario-excel"> 
                 <h1>Formulario modificar un excel Paso 1</h1>
 
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <label for = "nombre">Nombre Excel:</label>
                     <input type = "text" id = "nombre" name = "nombre" required>
                 </div>
                     
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <div class = "flex-1 d-flex align-items-center justify-content-space-between">
                         <label for = "agregar">Agregar un gasto</label>
                         <input type = "radio" id = "agregar" name = "accion" value = "agregar" checked>
@@ -83,7 +99,7 @@
                     </div>
                 </div>
                 
-                <div class = "d-flex flex-direction-column">
+                <div class = "d-flex flex-direction-column gap-05">
                     <label for = "hojaCalculo" id = "hojaCalculo">Ingrese Hoja de calculo a modificar</label>
                     <input type = "text" id = "hojaCalculo" name = "hojaCalculo"> 
                 </div>
@@ -96,10 +112,19 @@
             </form>
         {% endif %}
     </div>
+
+
+    <div id = "overlayCarga" class = "overlay" style = 'display:none;'> </div>
+    <div id = "modalCarga" class = "modal-carga-container" style = 'display:none;'>
+        <div class = "modal-carga-contenido d-flex justify-content-center align-items-center">
+            <h3>Cargando....</h3>
+        </div>
+    </div>
 {% endblock %}
 
 
 {% block scripts %}
-    <script src = "{{ url_for('static', filename = 'js/paso1.js') }}"> 
-    </script>
+    <script src = "{{ url_for('static', filename = 'js/paso1.js') }}"> </script>
+
+    <script src = "{{ url_for('static', filename = 'js/modal.js') }}"> </script>
 {% endblock %}

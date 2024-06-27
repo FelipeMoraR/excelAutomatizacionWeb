@@ -205,7 +205,7 @@ def submit_form_modificar():
                     print('No se encontró nada')
                     dataModificarExcel = {
                         'estado': '404',
-                        'error': 'No se econtró la hoja de calculo',
+                        'error': 'No se encontró la hoja de calculo',
                         'siguienteNivel': '',
                         'excelId': '',
                         'nombreHojaCalculo': '',

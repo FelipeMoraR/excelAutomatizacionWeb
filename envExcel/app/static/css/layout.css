@@ -2,7 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Bebas Neue", sans-serif;
+    font-family: "Raleway", sans-serif;
+}
+
+
+/* Para eliminar el efecto de fondo azul en dispositivos móviles */
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 .material-symbols-outlined {
@@ -229,6 +235,7 @@ input[type = "submit"]:active{
 .modal-resultado-contenido{
     position: relative;
     background-color: #4CD465;
+    padding: 1rem;
     width: 240px;
     min-height: 140px;
 }
@@ -236,6 +243,7 @@ input[type = "submit"]:active{
 .modal-resultado-contenido-error{
     position: relative;
     background-color: #FA737A;
+    padding: 1rem;
     width: 240px;
     min-height: 140px;
 }

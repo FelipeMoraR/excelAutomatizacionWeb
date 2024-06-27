@@ -14,13 +14,56 @@
 
     
     {% if data.estado == '200' and data.accion == 'eliminar'%}
-        <h2 class = "resultado-estado-excel" >Elemento eliminado</h2>  
+        <div id = "overlayResultado" class = "overlay"> </div>
+        <div class = "modal-resultado-container" id = "modalResultado">
+            <div class = "modal-resultado-contenido d-flex justify-content-center align-items-center">
+                <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <h2> Elemento eliminado </h2>
+            </div>
+        </div>
     {% elif data.estado == '200' and data.accion == 'agregar' %}  
-        <h2 class = "resultado-estado-excel" >Elemento/s agregado/s</h2>
+        
+        <div id = "overlayResultado" class = "overlay"> </div>
+        <div class = "modal-resultado-container" id = "modalResultado">
+            <div class = "modal-resultado-contenido d-flex justify-content-center align-items-center">
+                <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <h2>Elemento/s agregado/s</h2>
+            </div>
+        </div>
     {% elif data.estado == '200' and data.accion == 'agregarHoja' %}  
-        <h2 class = "resultado-estado-excel" >Hoja agregada</h2>
+        
+        <div id = "overlayResultado" class = "overlay"> </div>
+        <div class = "modal-resultado-container" id = "modalResultado">
+            <div class = "modal-resultado-contenido d-flex justify-content-center align-items-center">
+                <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <h2>Hoja agregada</h2>
+            </div>
+        </div>
     {% elif data.estado == '200' and data.accion == 'eliminarHoja' %}  
-        <h2 class = "resultado-estado-excel" >Hoja eliminada</h2>
+        
+        <div id = "overlayResultado" class = "overlay"> </div>
+        <div class = "modal-resultado-container" id = "modalResultado">
+            <div class = "modal-resultado-contenido d-flex justify-content-center align-items-center">
+                <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <h2>Hoja eliminada</h2>
+            </div>
+        </div>
     {% endif %}
         
 {% endblock %}
@@ -30,4 +73,6 @@
 {% block scripts %}
     <script src = "{{ url_for('static', filename = 'js/layout.js') }}"> 
     </script>
+
+    <script src = "{{ url_for('static', filename = 'js/modal.js') }}"> </script>
 {% endblock %}
