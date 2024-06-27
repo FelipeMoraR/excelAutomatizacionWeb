@@ -5,6 +5,13 @@
     font-family: "Bebas Neue", sans-serif;
 }
 
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }
 
 .d-flex{
     display: flex;
@@ -79,6 +86,11 @@ nav a{
 .boton-volver{
     color: black;
     text-decoration: none;
+    padding: 10px;
+    top: 20px;
+    border: 2px solid white;
+    left: 10px;
+    position: fixed;
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -112,6 +124,7 @@ nav a:active, .boton-volver:active{
     background-color: #A7FA73;
     justify-content: center;
     min-height: 500px;
+    margin-top: 50px;
 }
 
 .formulario-excel h1{
@@ -171,3 +184,69 @@ input[type = "submit"]:active{
 .input-paso2{
     width: 49%;
 }
+
+
+.overlay{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background: black;
+    opacity: 0.5;
+    z-index: 2;
+}
+
+.modal-carga-container{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.modal-carga-contenido{
+    background-color: #CEE3CC;
+    width: 240px;
+    min-height: 140px;
+}
+
+
+
+.modal-resultado-container{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+
+.modal-resultado-contenido{
+    position: relative;
+    background-color: #4CD465;
+    width: 240px;
+    min-height: 140px;
+}
+
+.modal-resultado-contenido-error{
+    position: relative;
+    background-color: #FA737A;
+    width: 240px;
+    min-height: 140px;
+}
+
+.cerrar-modal-resultado{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+
+
+
+

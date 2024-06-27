@@ -2,14 +2,39 @@
 
 {% block body %} 
 
-    <a href="/" class = "boton-volver">Volver home</a>
+<a href="/" class = "boton-volver">
+    <span class="material-symbols-outlined">
+        arrow_back
+    </span>
+    Volver home
+</a>
     
-    {% if dataCrearExcel.estado == '' %}
-        <h2 class = "resultado-estado-excel">Aun no ocurre nada</h2>
-    {% elif dataCrearExcel.estado  == '200' %}
-        <h2 class = "resultado-estado-excel">URL => <a href = "{{dataCrearExcel.urlExcel}}" target = "_blank"> Link </a> </h2>
-    {% else %}
-        <h2 class = "resultado-estado-excel"> {{dataCrearExcel.error}} </h2>
+    {% if dataCrearExcel.estado  == '200' %}
+        <div id = "overlayResultado" class = "overlay"> </div>
+        <div class = "modal-resultado-container" id = "modalResultado">
+            <div class = "modal-resultado-contenido d-flex justify-content-center align-items-center">
+                <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <h2>URL: <a href = "{{dataCrearExcel.urlExcel}}" target = "_blank"> {{dataCrearExcel.nombre}} </a> </h2>
+            </div>
+        </div>
+        
+    {% elif dataCrearExcel.estado  == '404' %}
+        <div id = "overlayResultado" class = "overlay"> </div>
+            <div class = "modal-resultado-container" id = "modalResultado">
+                <div class = "modal-resultado-contenido-error d-flex justify-content-center align-items-center">
+                    <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </div>
+                    <h2> {{dataCrearExcel.error}} </h2>
+            </div>
+        </div>
+        
     {% endif %}
     
     <form action="{{ url_for('submit_form_crear') }}" method="post" class = "formulario-excel">
@@ -30,5 +55,15 @@
         
     </form>
 
-    
+    <div id = "overlayCarga" class = "overlay" style = 'display:none;'> </div>
+    <div id = "modalCarga" class = "modal-carga-container" style = 'display:none;'>
+        <div class = "modal-carga-contenido d-flex justify-content-center align-items-center">
+            <h3>Cargando....</h3>
+        </div>
+    </div>
+
+{% block scripts %}
+    <script src = "{{ url_for('static', filename = 'js/modal.js') }}"> </script>
+{% endblock %}
+
 {% endblock %}

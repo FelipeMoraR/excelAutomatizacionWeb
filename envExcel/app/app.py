@@ -47,6 +47,7 @@ def verExcel():
 
     dataVerExcel = {
         'estado': '',
+        'nombreExcel': '',
         'urlExcel': ''
     }
 
@@ -64,11 +65,13 @@ def submit_form_ver():
             
             dataVerExcel = {
                 'estado': '200',
+                'nombreExcel': nombre,
                 'urlExcel': urlExcel
             }
         else:
             dataVerExcel = {
                 'estado': '404',
+                'nombreExcel': '',
                 'urlExcel': ''
             }
 
@@ -101,12 +104,14 @@ def submit_form_crear():
             dataCrearExcel = {
                 'estado': '200',
                 'error': '',
+                'nombre': nombre,
                 'urlExcel': urlExcelCreado
             }
         else:
             dataCrearExcel = {
                 'estado': '404',
                 'error': 'El excel ya existe',
+                'nombre': '',
                 'urlExcel': ''
             }
             
