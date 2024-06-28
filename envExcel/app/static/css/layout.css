@@ -72,6 +72,34 @@ a {
     margin-top: 7rem !important;
 }
 
+.line-height-24px{
+    line-height: 24px;
+}
+
+.max-height-200px{
+    max-height: 200px;
+}
+
+.overflow-hidden{
+    overflow: hidden;
+}
+
+.overflow-x-hidden{
+    overflow-x: hidden;
+}
+
+.overflow-y-scroll{
+    overflow-y: scroll;
+}
+
+.overflow-scroll{
+    overflow: scroll;
+}
+
+.white-space-preline{
+    white-space: pre-line;
+}
+
 .text-align-center{
     text-align: center;
 }

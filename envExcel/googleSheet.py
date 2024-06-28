@@ -329,7 +329,7 @@ def compartiExcel(hoja_calculo):
 def formateoValoresPorEliminar(excel_id, hoja_trabajo_nombre, filas, cliente):
     try:
         valores_limpios = []
-        mensajes  = ""
+        array_mensajes  = []
 
         # Abrir la hoja de cálculo por ID
         excel = cliente.open_by_key(excel_id)
@@ -341,11 +341,17 @@ def formateoValoresPorEliminar(excel_id, hoja_trabajo_nombre, filas, cliente):
             valores_fila = hoja_calculo.row_values(fila)
             valores_limpios.append(valores_fila)
         
-        for index, valor in enumerate(valores_limpios):
-            mensaje = "Posición {}: {}\n".format(index, ", $".join(valor))
-            mensajes += mensaje 
         
-        return mensajes
+        for index, valor in enumerate(valores_limpios):
+            #mensaje = "Posición {}: {}".format(index, ", $".join(valor))
+            obj = {
+                'posicion': index,
+                'valor': valor
+
+            }
+            array_mensajes.append(obj)
+        
+        return array_mensajes
     
     
     except Exception as e:
@@ -400,6 +406,31 @@ def identificarValoresFilasEliminar(excel_id, hoja_trabajo_nombre ,contenido_cel
         print(f"ocurrió un error: {e}")
  
 
+def identificarTodosValoresFilasEliminar(excel_id, hoja_trabajo_nombre, cliente):
+    try:
+        # Abrir la hoja de cálculo por ID
+        excel = cliente.open_by_key(excel_id)
+       
+        # Seleccionar la hoja de trabajo por nombre, por ahora solo agrega en la primera hoja de trabajo
+        hoja_calculo = excel.worksheet(hoja_trabajo_nombre)
+       
+        #Encontrar todas las celdas
+        lista_celdas = hoja_calculo.get_all_records()
+
+
+        return lista_celdas
+
+    except Exception as e:
+        print(f"ocurrió un error: {e}")
+
+
+
+    
+    
+    except Exception as e:
+        print(f"ocurrió un error: {e}")
+
+
 def obtener_url_archivo(id_excel, drive_service):
     try:
         # Obtener la información del archivo
@@ -416,13 +447,13 @@ def obtener_url_archivo(id_excel, drive_service):
 
 
 # Conexion
-drive_service = conexionDriveBuildService()
-sheet_service = conexionSheetBuildService()
-cliente = conexionDriveCliente()
+#drive_service = conexionDriveBuildService()
+#sheet_service = conexionSheetBuildService()
+#cliente = conexionDriveCliente()
 
 # Verificar si existe una hoja de cálculo con un nombre específico
-nombre_excel = "pedrito"
-nombre_hoja = 'pedrotestjajaja'
+#nombre_excel = "pedrito"
+#nombre_hoja = 'inicio'
 
 
 #rows_to_add = [
@@ -432,16 +463,22 @@ nombre_hoja = 'pedrotestjajaja'
 
 #Descubrimos el excel 
 #objeto = obtenerExcel(nombre_excel, drive_service)
+#listaDict = identificarTodosValoresFilasEliminar(objeto['id'], nombre_hoja, cliente)
+
+#print(formatearTodosValoresFilasEliminar(listaDict))
+
+
 #print(obtenerHojaCalculo(objeto['id'], nombre_hoja, sheet_service))
 #print(obtener_url_archivo(objeto['id'], drive_service))
 #crearNuevaHoja(objeto['id'], 'sexito2', sheet_service, cliente)
 #print(existeHoja(objeto['id'], 'pruebaAlgoNoExiste', sheet_service))
 #crearExcel('testV4', cliente, drive_service, sheet_service)
 #IMPORTANTE PARA ELIMINAR DEBES EJECUTAR ESTA FUNCION QUE MUESTRA LA POSICION DE LOS ELEMENTOS QUE QUIERES ELIMINAR
-#filas = identificarValoresFilasEliminar(objeto['id'], objeto['name'], 'Juan', cliente) #Esto da el numero de las filas del excel
+#filas = identificarValoresFilasEliminar(objeto['id'], nombre_hoja, 'a', cliente) #Esto da el numero de las filas del excel
+#print(filas)
 #hojas = listarHojas(objeto['id'], sheet_service)
 #print(formateoValoresPorEliminarHojas(hojas))
-#print(formateoValoresPorEliminar(objeto['id'], objeto['name'], filas, cliente))
+#print(formateoValoresPorEliminar(objeto['id'], nombre_hoja, filas, cliente))
 
 #eliminarFilas(objeto['id'], objeto['name'], filas, 0, cliente)
 

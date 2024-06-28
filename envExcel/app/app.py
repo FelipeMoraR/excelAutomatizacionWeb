@@ -200,7 +200,9 @@ def submit_form_modificar():
         else:
             if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
                 excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
-            
+                listaDict = googleSheet.identificarTodosValoresFilasEliminar(excel['id'], hojaCalculo, cliente)
+                
+
                 if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
                     print('No se encontró nada')
                     dataModificarExcel = {
@@ -221,6 +223,7 @@ def submit_form_modificar():
                         'excelId': excel['id'],
                         'accion': accion,
                         'nombreHojaCalculo': hojaCalculo,
+                        'listaGastos' : listaDict
                         
                     }
                 
@@ -254,8 +257,8 @@ def submit_form_modificar_p2():
         nombre_hoja = request.form['nombre_hoja'].lower()
         accion = request.form['accion']
         nombre_gasto = request.form.getlist('nombre_gasto')
-        
-
+        lista_gasto = request.form['lista_gastos']
+        array_lista_gastos = ast.literal_eval(lista_gasto)
 
         if accion == 'agregar':
             precio_gasto = request.form.getlist('precio_gasto')
@@ -287,20 +290,22 @@ def submit_form_modificar_p2():
         elif accion == 'eliminar':
             
             try:
+                
                 filasEliminar = googleSheet.identificarValoresFilasEliminar(id_excel, nombre_hoja , nombre_gasto[0], cliente) #SE IDENTIFICA QUE FILAS(NUEMROS) SE VAN A ELIMINAR
                 filasEliminarFormateadas = googleSheet.formateoValoresPorEliminar(id_excel, nombre_hoja, filasEliminar, cliente)
-                print(filasEliminarFormateadas)
-                if len(filasEliminar) == 0:
+                print(filasEliminar)
+                if len(filasEliminar) == 0 or filasEliminar == None:
                     dataModificarExcel = {
-                        'estado': '204',
-                        'error': 'No existen elementos dentro del excel',
-                        'siguienteNivel': '',
-                        'excelId': '',
-                        'accion': '',
-                        'nombreHojaCalculo': '',
+                        'estado': '404',
+                        'error': 'Valor no existe',
+                        'siguienteNivel': '2',
+                        'excelId': id_excel,
+                        'accion': accion,
+                        'nombreHojaCalculo': nombre_hoja,
+                        'listaGastos': array_lista_gastos
                     
                     }
-                    return render_template('modificarExcel.html', data = dataModificarExcel)
+                    return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
                 else:
                     dataModificarExcel = {
                         'estado': '200',
@@ -316,7 +321,16 @@ def submit_form_modificar_p2():
                     return render_template('modificarExcelPaso3.html', data = dataModificarExcel)
             except Exception as e:
                 print(f'Ocurrió un error al identificar las filas a elimianr. Error => {e}')  
-                return render_template('index.html')          
+                dataModificarExcel = {
+                    'estado': '',
+                    'error': '',
+                    'siguienteNivel': '',
+                    'excelId': '',
+                    'accion': '',
+                    'nombreHojaCalculo': '',
+                    
+                }
+                return render_template('index.html', data = dataModificarExcel)          
         
         else:
             print('error lectura accion')
@@ -351,6 +365,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
+                    'listaGastos': ''
                     
                 }
             return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
@@ -367,6 +382,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
+                    'listaGastos': ''
                     
                 }
 
@@ -393,6 +409,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
+                    'listaGastos': ''
                     
                 }
             return render_template('modificarExcelPaso2.html', data = dataModificarExcel)

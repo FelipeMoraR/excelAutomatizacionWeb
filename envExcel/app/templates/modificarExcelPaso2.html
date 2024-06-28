@@ -54,6 +54,13 @@
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
                 <h1>Formulario modificar un excel Paso 2 ELIMINAR</h1>
+                
+                <div class = "white-space-preline text-align-center overflow-y-scroll max-height-200px d-flex flex-direction-column gap-1 overflow-x-hidden"> 
+                    {% for gasto in data.listaGastos %}
+                        <p>Nombre Gasto: <strong>{{ gasto['Nombre Gasto'] }}</strong>, Valor: <strong>{{ gasto['Valor'] }}</strong></p>
+                    {% endfor %}
+                </div>
+                <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
                 <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
                 <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
                 <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
@@ -77,7 +84,18 @@
 
         
         {% if data.estado == '400' or data.estado == '404' %}
-            <h2 class = "resultado-estado-excel"> {{ data.error }}</h2>
+            <div id = "overlayResultado" class = "overlay"> </div>
+            <div class = "modal-resultado-container" id = "modalResultado">
+                <div class = "modal-resultado-contenido-error d-flex justify-content-center align-items-center">
+                    <div id = "cerrarModal" class = "cerrar-modal-resultado" >
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </div>
+                    
+                    <h2> Error {{data.estado}}: {{data.error}} </h2>
+                </div>
+            </div>
         {% endif %}
 
         <div id = "overlayCarga" class = "overlay" style = 'display:none;'> </div>
