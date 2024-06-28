@@ -6,6 +6,8 @@
     <script src = "{{ url_for('static', filename = 'js/layout.js') }}"> </script> 
 
     <script src = "{{ url_for('static', filename = 'js/modal.js') }}"> </script>
+
+    <script src = "{{ url_for('static', filename = 'js/gastos.js') }}"> </script>
 {% endblock %}
 
 {% block body %} 
@@ -55,10 +57,15 @@
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
                 <h1>Formulario modificar un excel Paso 2 ELIMINAR</h1>
                 
-                <div class = "white-space-preline text-align-center overflow-y-scroll max-height-200px d-flex flex-direction-column gap-1 overflow-x-hidden"> 
+                <div id = "containerGastos" class = "position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px d-flex flex-direction-column gap-1 overflow-x-hidden"> 
                     {% for gasto in data.listaGastos %}
                         <p>Nombre Gasto: <strong>{{ gasto['Nombre Gasto'] }}</strong>, Valor: <strong>{{ gasto['Valor'] }}</strong></p>
                     {% endfor %}
+                    
+                    <span class="material-symbols-outlined position-absolute container-flecha-abajo">
+                        arrow_downward
+                    </span>
+                   
                 </div>
                 <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
                 <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>

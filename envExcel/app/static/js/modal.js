@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let overlayResultado = document.getElementById('overlayResultado');
 
     if(form){
-        console.info('entreee')
         form.addEventListener('submit', () => {
             modalCarga.style.display = 'flex';
             overlayCarga.style.display = 'block';
