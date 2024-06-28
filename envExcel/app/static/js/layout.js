@@ -18,21 +18,22 @@ function addInputAgregar() {
     const spanEliminar = document.createElement("span");
     const nameInput = document.createElement("input");
 
-    nuevoDiv.className = 'd-flex justify-content-space-between'
-
+    nuevoDiv.className = 'd-flex gap-1'
+    nuevoDiv.style.maxHeight = '20px'
+    nuevoDiv.style.position = 'relative'
 
     nameInput.type = "text";
     nameInput.name = "nombre_gasto";
     nameInput.required = true;
     nameInput.placeholder = 'Nombre';
-    nameInput.className = 'input-paso2';
+    nameInput.className = 'w-45';
 
     const priceInput = document.createElement("input");
     priceInput.type = "number";
     priceInput.name = "precio_gasto";
     priceInput.required = true;
     priceInput.placeholder = 'Precio';
-    priceInput.className = 'input-paso2';
+    priceInput.className = 'w-45';
 
     botonEliminar.className = 'eliminar_gasto';
     spanEliminar.className = 'material-symbols-outlined';

@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let overlayResultado = document.getElementById('overlayResultado');
 
     if(form){
+        console.info('entreee')
         form.addEventListener('submit', () => {
-            momodalCargadal.style.display = 'flex';
+            modalCarga.style.display = 'flex';
             overlayCarga.style.display = 'block';
             body.style.overflow = 'hidden';
         });

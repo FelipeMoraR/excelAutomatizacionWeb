@@ -67,6 +67,19 @@ a {
     flex: 1;
 }
 
+
+.mt-12{
+    margin-top: 7rem !important;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.px-3{
+    padding: 0 1rem;
+}
+
 body{
     background-color: #A7FA73;
 }
@@ -187,8 +200,8 @@ input[type = "submit"]:active{
 }
 
 
-.input-paso2{
-    width: 49%;
+.w-45{
+    width: 45%;
 }
 
 
@@ -254,6 +267,17 @@ input[type = "submit"]:active{
     top: 5px;
 }
 
+.eliminar_gasto{
+    position: absolute;
+    right: -5px;
+    top: 0;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.eliminar_gasto span{
+    font-size: 20px;
+}
 
 
 
