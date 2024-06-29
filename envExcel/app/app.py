@@ -257,8 +257,7 @@ def submit_form_modificar_p2():
         nombre_hoja = request.form['nombre_hoja'].lower()
         accion = request.form['accion']
         nombre_gasto = request.form.getlist('nombre_gasto')
-        lista_gasto = request.form['lista_gastos']
-        array_lista_gastos = ast.literal_eval(lista_gasto)
+        
 
         if accion == 'agregar':
             precio_gasto = request.form.getlist('precio_gasto')
@@ -285,12 +284,21 @@ def submit_form_modificar_p2():
             
             except Exception as e:
                 print(f'Ocurrio un error al intentar agregar nuevas filas. ERROR => {e}')
-                return render_template('index.html')
+                dataModificarExcel = {
+                    'estado': '',
+                    'error': '',
+                    'siguienteNivel': '',
+                    'excelId': '',
+                    'accion': '',
+                    'nombreHojaCalculo': '',
+                    
+                }
+                return render_template('index.html', data = dataModificarExcel)
                 
         elif accion == 'eliminar':
-            
+            lista_gasto = request.form['lista_gastos']
+            array_lista_gastos = ast.literal_eval(lista_gasto)
             try:
-                
                 filasEliminar = googleSheet.identificarValoresFilasEliminar(id_excel, nombre_hoja , nombre_gasto[0], cliente) #SE IDENTIFICA QUE FILAS(NUEMROS) SE VAN A ELIMINAR
                 filasEliminarFormateadas = googleSheet.formateoValoresPorEliminar(id_excel, nombre_hoja, filasEliminar, cliente)
                 print(filasEliminar)
@@ -315,7 +323,8 @@ def submit_form_modificar_p2():
                         'accion': 'eliminar',
                         'nombreHojaCalculo': nombre_hoja,
                         'filasEliminar': filasEliminar,
-                        'filasEliminarFormateadas': filasEliminarFormateadas
+                        'filasEliminarFormateadas': filasEliminarFormateadas,
+                        'listaGastos': array_lista_gastos
                     }
 
                     return render_template('modificarExcelPaso3.html', data = dataModificarExcel)
@@ -354,7 +363,8 @@ def submit_form_modificar_p3():
         filasEliminar = request.form['filasEliminar'] #Aqui llega como string
         arrayFilasEliminar = ast.literal_eval(filasEliminar)
         posicion_gasto = int(request.form['posicion_gasto'])
-       
+        lista_gasto = request.form['lista_gastos']
+        array_lista_gastos = ast.literal_eval(lista_gasto)
         try:
             arrayFilasEliminar[posicion_gasto]
         except:
@@ -365,7 +375,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': ''
+                    'listaGastos': array_lista_gastos
                     
                 }
             return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
@@ -382,7 +392,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': ''
+                    'listaGastos': array_lista_gastos
                     
                 }
 
@@ -409,7 +419,7 @@ def submit_form_modificar_p3():
                     'excelId': id_excel,
                     'accion': accion,
                     'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': ''
+                    'listaGastos': array_lista_gastos
                     
                 }
             return render_template('modificarExcelPaso2.html', data = dataModificarExcel)

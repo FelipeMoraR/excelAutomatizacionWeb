@@ -23,6 +23,7 @@
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
                 <h1>Formulario modificar un excel Paso 2 AGREGAR</h1>
                 
+                <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
                 <input type="text" name = "id_excel" id = "id_excel" value = "{{data.excelId}}" hidden readonly>
                 <input type="text" name = "nombre_hoja" id = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
                 <input type="text" name = "accion" id = "accion" value = "{{data.accion}}" hidden readonly>
