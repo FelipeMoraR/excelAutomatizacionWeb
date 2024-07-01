@@ -201,7 +201,7 @@ def submit_form_modificar():
             if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
                 excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
                 listaDict = googleSheet.identificarTodosValoresFilasEliminar(excel['id'], hojaCalculo, cliente)
-                
+                print('lista => ', listaDict)
 
                 if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
                     print('No se encontró nada')
@@ -215,6 +215,20 @@ def submit_form_modificar():
                         }
                     
                     return render_template('modificarExcel.html', data = dataModificarExcel)
+
+                if accion == 'eliminar' and len(listaDict) == 0:
+                    dataModificarExcel = {
+                        'estado': '204',
+                        'error': 'No existen valores a eliminar',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': '',
+                        'nombreHojaCalculo': '',  
+                    }
+
+                    return render_template('modificarExcel.html', data = dataModificarExcel)
+
+
 
                 dataModificarExcel = {
                         'estado': '200',
@@ -236,8 +250,7 @@ def submit_form_modificar():
                         'siguienteNivel': '',
                         'excelId': '',
                         'accion': '',
-                        'nombreHojaCalculo': '',
-                        
+                        'nombreHojaCalculo': '',  
                 }
 
             return render_template('modificarExcel.html', data = dataModificarExcel)
@@ -256,10 +269,11 @@ def submit_form_modificar_p2():
         id_excel = request.form['id_excel']
         nombre_hoja = request.form['nombre_hoja'].lower()
         accion = request.form['accion']
-        nombre_gasto = request.form.getlist('nombre_gasto')
+        
         
 
         if accion == 'agregar':
+            nombre_gasto = request.form.getlist('nombre_gasto')
             precio_gasto = request.form.getlist('precio_gasto')
 
             for nombre, precio in zip(nombre_gasto,precio_gasto):
@@ -298,14 +312,19 @@ def submit_form_modificar_p2():
         elif accion == 'eliminar':
             lista_gasto = request.form['lista_gastos']
             array_lista_gastos = ast.literal_eval(lista_gasto)
+
+            lista_posicion_gasto = request.form.getlist('gasto')
+
+            #Explicacion sintaxis nueva_lista = [expresion for elemento in lista]
+            lista_posicion_gasto = [int(pos) for pos in lista_posicion_gasto]
+            
             try:
-                filasEliminar = googleSheet.identificarValoresFilasEliminar(id_excel, nombre_hoja , nombre_gasto[0], cliente) #SE IDENTIFICA QUE FILAS(NUEMROS) SE VAN A ELIMINAR
-                filasEliminarFormateadas = googleSheet.formateoValoresPorEliminar(id_excel, nombre_hoja, filasEliminar, cliente)
-                print(filasEliminar)
-                if len(filasEliminar) == 0 or filasEliminar == None:
+                print(lista_posicion_gasto)
+                googleSheet.eliminarFilas(id_excel, nombre_hoja, lista_posicion_gasto, cliente)
+                if len(lista_posicion_gasto) == 0:
                     dataModificarExcel = {
                         'estado': '404',
-                        'error': 'Valor no existe',
+                        'error': 'No ingresaste nada',
                         'siguienteNivel': '2',
                         'excelId': id_excel,
                         'accion': accion,
@@ -318,24 +337,22 @@ def submit_form_modificar_p2():
                     dataModificarExcel = {
                         'estado': '200',
                         'error': '',
-                        'siguienteNivel': '3',
-                        'excelId':  id_excel,
+                        'siguienteNivel': '1',
+                        'excelId': '',
                         'accion': 'eliminar',
-                        'nombreHojaCalculo': nombre_hoja,
-                        'filasEliminar': filasEliminar,
-                        'filasEliminarFormateadas': filasEliminarFormateadas,
-                        'listaGastos': array_lista_gastos
+                        'nombreHojaCalculo': '',
+                    
                     }
 
-                    return render_template('modificarExcelPaso3.html', data = dataModificarExcel)
+                    return render_template('index.html', data = dataModificarExcel)
             except Exception as e:
                 print(f'Ocurrió un error al identificar las filas a elimianr. Error => {e}')  
                 dataModificarExcel = {
-                    'estado': '',
+                    'estado': '404',
                     'error': '',
-                    'siguienteNivel': '',
+                    'siguienteNivel': '1',
                     'excelId': '',
-                    'accion': '',
+                    'accion': 'eliminar',
                     'nombreHojaCalculo': '',
                     
                 }

@@ -359,7 +359,7 @@ def formateoValoresPorEliminar(excel_id, hoja_trabajo_nombre, filas, cliente):
 
 
 
-def eliminarFilas(excel_id, hoja_trabajo_nombre, filas, numero_fila_eliminar, cliente):
+def eliminarFilas(excel_id, hoja_trabajo_nombre, posiciones_eliminar, cliente):
     
     try:
         # Abrir la hoja de cálculo por ID
@@ -368,13 +368,11 @@ def eliminarFilas(excel_id, hoja_trabajo_nombre, filas, numero_fila_eliminar, cl
         # Seleccionar la hoja de trabajo por nombre, por ahora solo agrega en la primera hoja de trabajo
         hoja_calculo = excel.worksheet(hoja_trabajo_nombre)
 
-        if len(filas) > 1:
-            hoja_calculo.delete_rows(filas[numero_fila_eliminar])
-        elif len(filas) == 1:
-            hoja_calculo.delete_rows(filas[0])
-        else:
-            print('No existen valores en la lista') 
-            return False
+        posiciones_eliminar.sort(reverse=True)
+        
+
+        for posicion in posiciones_eliminar:
+            hoja_calculo.delete_rows(posicion + 2)
         
         return True
     
@@ -408,27 +406,31 @@ def identificarValoresFilasEliminar(excel_id, hoja_trabajo_nombre ,contenido_cel
 
 def identificarTodosValoresFilasEliminar(excel_id, hoja_trabajo_nombre, cliente):
     try:
+        arrayValores = []
         # Abrir la hoja de cálculo por ID
         excel = cliente.open_by_key(excel_id)
        
         # Seleccionar la hoja de trabajo por nombre, por ahora solo agrega en la primera hoja de trabajo
         hoja_calculo = excel.worksheet(hoja_trabajo_nombre)
        
-        #Encontrar todas las celdas
+        #Encontrar todas las celdas, esta funcion ignora la primera fila
         lista_celdas = hoja_calculo.get_all_records()
+       
+        
+        for index, valor in enumerate(lista_celdas):
+            gastoObj = {
+                'posicion': index,
+                'nombre': valor['Nombre Gasto'], #Entonces este Nombre Gasto es la primera fila del excel, si no existe se cae.
+                'valor': valor['Valor']
+            }
 
+            arrayValores.append(gastoObj)
 
-        return lista_celdas
+        return arrayValores
 
     except Exception as e:
         print(f"ocurrió un error: {e}")
 
-
-
-    
-    
-    except Exception as e:
-        print(f"ocurrió un error: {e}")
 
 
 def obtener_url_archivo(id_excel, drive_service):
@@ -453,7 +455,7 @@ def obtener_url_archivo(id_excel, drive_service):
 
 # Verificar si existe una hoja de cálculo con un nombre específico
 #nombre_excel = "pedrito"
-#nombre_hoja = 'inicio'
+#nombre_hoja = 'sexito2'
 
 
 #rows_to_add = [
@@ -493,3 +495,5 @@ def obtener_url_archivo(id_excel, drive_service):
 #else:
     #print('No existe niuna vaina')
     #print(formateoValoresPorEliminar(objeto['id'], objeto['name'], filas))
+
+#eliminarFilas(objeto['id'], nombre_hoja, [3,2], cliente)
