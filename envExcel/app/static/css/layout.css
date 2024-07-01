@@ -171,12 +171,14 @@ nav a:active, .boton-volver:active{
     padding: .5rem 1rem;
     background-color: #A7FA73;
     justify-content: center;
+    align-items: center;
     min-height: 500px;
     margin-top: 50px;
 }
 
 .formulario-excel h1{
     text-align: center;
+    margin-bottom: 20px;
 }
 
 
@@ -339,4 +341,16 @@ input[type = "submit"]:active{
 .grid-8{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+}
+
+.max-width-200{
+    max-width: 200px;
+}
+
+.max-width-500{
+    max-width: 500px;
+}
+
+.align-items-flex-end{
+    align-items: flex-end;
 }

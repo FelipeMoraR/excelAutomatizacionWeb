@@ -21,34 +21,37 @@
         {% if data.accion == 'agregar' %}
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
-                <h1>Formulario modificar un excel Paso 2 AGREGAR</h1>
-                
-                <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
-                <input type="text" name = "id_excel" id = "id_excel" value = "{{data.excelId}}" hidden readonly>
-                <input type="text" name = "nombre_hoja" id = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
-                <input type="text" name = "accion" id = "accion" value = "{{data.accion}}" hidden readonly>
-                <div class = "d-flex flex-direction-column gap-1 px-3" >
-                    <div class = "d-flex gap-1">
-                        <label for="nombre_gasto" class = "w-45">Nombre</label>
-                        <label for="precio_gasto" class = "w-45">Precio</label>
-                    </div>
-
-                    <div id = "input-container" class = "d-flex flex-direction-column gap-05">
+                <div class = "d-flex flex-direction-column gap-1 max-width-500">
+                    <h1>Agregar gastos</h1>
+                    
+                    <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
+                    <input type="text" name = "id_excel" id = "id_excel" value = "{{data.excelId}}" hidden readonly>
+                    <input type="text" name = "nombre_hoja" id = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
+                    <input type="text" name = "accion" id = "accion" value = "{{data.accion}}" hidden readonly>
+                    <div class = "d-flex flex-direction-column gap-1 px-3" >
                         <div class = "d-flex gap-1">
-                            <input type="text" name="nombre_gasto" id = "nombre_gasto" placeholder = "Nombre" class = "w-45" required>
-                            <input type="number" name="precio_gasto" id = "precio_gasto" placeholder="Precio" class = "w-45" required>
+                            <label for="nombre_gasto" class = "w-45">Nombre</label>
+                            <label for="precio_gasto" class = "w-45">Precio</label>
+                        </div>
+
+                        <div id = "input-container" class = "d-flex flex-direction-column gap-05">
+                            <div class = "d-flex gap-1">
+                                <input type="text" name="nombre_gasto" id = "nombre_gasto" placeholder = "Nombre" class = "w-45" required>
+                                <input type="number" name="precio_gasto" id = "precio_gasto" placeholder="Precio" class = "w-45" required>
+                                
+                            </div> 
                             
-                        </div> 
+                        </div>
                         
                     </div>
                     
-                </div>
-                
-                <div class = "d-flex gap-1">
-                    <input type="submit" value="Enviar">
+                    <div class = "d-flex gap-1">
+                        <input type="submit" value="Guardar gastos">
 
-                    <button type = "button" onclick = "addInputAgregar()" class = "agregar-gasto">Agregar gasto</button>
+                        <button type = "button" onclick = "addInputAgregar()" class = "agregar-gasto">Añadir gasto</button>
+                    </div>
                 </div>
+                    
                 
 
                 
@@ -56,38 +59,38 @@
         {% elif data.accion == 'eliminar' %}
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
-                <h1>Selecciona los elementos a eliminar</h1>
-                
-                <div id = "containerGastos" class = "grid-8 gap-1 position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px overflow-x-hidden"> 
-                    {% for gasto in data.listaGastos %}
+                <div class = "d-flex flex-direction-column gap-1 max-width-500">
+                    <h1>Selecciona los elementos a eliminar</h1>
+                    
+                    <div id = "containerGastos" class = "grid-8 gap-1 position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px overflow-x-hidden"> 
+                        {% for gasto in data.listaGastos %}
 
-                        <label for="{{gasto['posicion']}}" class = "container-gasto"> <strong>{{gasto['nombre']}}</strong>:  <strong>{{ gasto['valor'] }}</strong> </label>
-                        <input type="checkbox" name="gasto" id="{{gasto['posicion']}}" value = "{{gasto['posicion']}}" style = "display: none;">
+                            <label for="{{gasto['posicion']}}" class = "container-gasto"> <strong>{{gasto['nombre']}}</strong>:  <strong>{{ gasto['valor'] }}</strong> </label>
+                            <input type="checkbox" name="gasto" id="{{gasto['posicion']}}" value = "{{gasto['posicion']}}" style = "display: none;">
+                            
+                        {% endfor %}
                         
-                    {% endfor %}
+                        <span class="material-symbols-outlined position-absolute container-flecha-abajo">
+                            arrow_downward
+                        </span>
                     
-                    <span class="material-symbols-outlined position-absolute container-flecha-abajo">
-                        arrow_downward
-                    </span>
-                   
-                </div>
-                <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
-                <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
-                <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
-                <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
-
-                <div class = "d-flex flex-direction-column gap-1">
-                    <div id = "listadoValoresEliminar" class = "d-flex flex-direction-column gap-05">
-                       
                     </div>
-                    
-                    <div class = "d-flex justify-content-center">
-                        <input type="submit" value="Enviar">
-                    </div>
-                    
-                </div>
-               
+                    <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
+                    <input type="text" name = "id_excel" value = "{{data.excelId}}" hidden readonly>
+                    <input type="text" name = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
+                    <input type="text" name = "accion" value = "{{data.accion}}" hidden readonly>
 
+                    <div class = "d-flex flex-direction-column gap-1">
+                        <div id = "listadoValoresEliminar" class = "d-flex flex-direction-column gap-05">
+                        
+                        </div>
+                        
+                        <div class = "d-flex justify-content-center">
+                            <input type="submit" value="Enviar">
+                        </div>
+                        
+                    </div>
+                </div>                    
                 
             </form>
         {% endif %}
