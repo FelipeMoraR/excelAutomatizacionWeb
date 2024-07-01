@@ -331,3 +331,12 @@ input[type = "submit"]:active{
         bottom: 0; /* Cambia la posición vertical según sea necesario */
     }
 }
+
+.gasto-agregado{
+    background-color: rgb(0,0,0, 0.3);
+}
+
+.grid-8{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+}

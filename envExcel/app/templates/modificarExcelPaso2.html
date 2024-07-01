@@ -56,12 +56,14 @@
         {% elif data.accion == 'eliminar' %}
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
-                <h1>Formulario modificar un excel Paso 2 ELIMINAR</h1>
+                <h1>Selecciona los elementos a eliminar</h1>
                 
-                <div id = "containerGastos" class = "position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px d-flex flex-direction-column gap-1 overflow-x-hidden"> 
+                <div id = "containerGastos" class = "grid-8 gap-1 position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px overflow-x-hidden"> 
                     {% for gasto in data.listaGastos %}
-                        <label for="{{gasto['nombre']}}"> <strong>{{gasto['nombre']}}</strong>:  <strong>{{ gasto['valor'] }}</strong> </label>
-                        <input type="checkbox" name="gasto" id="{{gasto['nombre']}}" value = "{{gasto['posicion']}}">
+
+                        <label for="{{gasto['posicion']}}" class = "container-gasto"> <strong>{{gasto['nombre']}}</strong>:  <strong>{{ gasto['valor'] }}</strong> </label>
+                        <input type="checkbox" name="gasto" id="{{gasto['posicion']}}" value = "{{gasto['posicion']}}" style = "display: none;">
+                        
                     {% endfor %}
                     
                     <span class="material-symbols-outlined position-absolute container-flecha-abajo">
