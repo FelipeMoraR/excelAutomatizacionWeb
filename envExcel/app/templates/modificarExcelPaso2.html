@@ -21,9 +21,12 @@
         {% if data.accion == 'agregar' %}
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
-                <div class = "d-flex flex-direction-column gap-1 max-width-500">
+                <div class = "d-flex flex-direction-column gap-1 max-width-500 interior-formulario position-relative mb-1">
                     <h1>Agregar gastos</h1>
                     
+                    <div class = "decorador-1 position-absolute"></div>
+                    <div class = "decorador-2 position-absolute"></div>
+
                     <input type="text" name="lista_gastos" id="lista_gastos" value="{{ data.listaGastos}}" hidden readonly>
                     <input type="text" name = "id_excel" id = "id_excel" value = "{{data.excelId}}" hidden readonly>
                     <input type="text" name = "nombre_hoja" id = "nombre_hoja" value = "{{data.nombreHojaCalculo}}" hidden readonly>
@@ -59,9 +62,12 @@
         {% elif data.accion == 'eliminar' %}
             
             <form action="{{ url_for('submit_form_modificar_p2') }}" method="post" class = "formulario-excel">
-                <div class = "d-flex flex-direction-column gap-1 max-width-500">
+                <div class = "d-flex flex-direction-column gap-1 max-width-500 interior-formulario position-relative">
                     <h1>Selecciona los elementos a eliminar</h1>
                     
+                    <div class = "decorador-1 position-absolute"></div>
+                    <div class = "decorador-2 position-absolute"></div>
+
                     <div id = "containerGastos" class = "grid-8 gap-1 position-relative white-space-preline text-align-center overflow-y-scroll max-height-200px overflow-x-hidden"> 
                         {% for gasto in data.listaGastos %}
 

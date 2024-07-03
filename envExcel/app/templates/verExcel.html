@@ -18,7 +18,12 @@
                         close
                     </span>
                 </div>
-                <h2> URL: <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> {{dataVerExcel.nombreExcel}} </a> </h2>
+                
+                <div class = "d-flex flex-direction-column gap-1">
+                    <h2> URL </h2>
+                    <p> <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> {{dataVerExcel.nombreExcel}} </a> </p>
+                </div>
+                
             </div>
         </div>
         
@@ -37,9 +42,12 @@
     {% endif %}
 
     <form action="{{ url_for('submit_form_ver') }}" method="post" class = "formulario-excel">
-        <div class = "d-flex flex-direction-column gap-1 max-width-500">
+        <div class = "d-flex flex-direction-column gap-1 max-width-500 interior-formulario position-relative">
             <h1>Formulario ver un excel</h1>
-        
+            
+            <div class = "decorador-1 position-absolute"></div>
+            <div class = "decorador-2 position-absolute"></div>
+
             <div class = "d-flex flex-direction-column gap-1">
                     <div class = "d-flex flex-direction-column gap-05">
                     <label for="nombre">Nombre Excel:</label>
