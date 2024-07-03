@@ -393,8 +393,8 @@ input[type = "submit"]:active{
     width: 150px;
     height: 150px;
     background-color: #3C2839;
-    top: -2.2rem;
-    right: -2.2rem;
+    top: -1.6rem;
+    right: -1.6rem;
     z-index: -1;
     border: 5px solid #685765;
 }
@@ -403,7 +403,7 @@ input[type = "submit"]:active{
     width: 60px;
     height: 60px;
     background-color: #913083;
-    left: -2.2rem;
-    bottom: -2.2rem;
+    left: -1.6rem;
+    bottom: -1.6rem;
     border: 5px solid #67335F;
 }
