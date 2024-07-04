@@ -407,3 +407,10 @@ input[type = "submit"]:active{
     bottom: -1.6rem;
     border: 5px solid #67335F;
 }
+
+
+@media (max-width: 390px){
+    .font-sm-12{
+        font-size: 12px;
+    }
+}
