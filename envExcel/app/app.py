@@ -154,9 +154,7 @@ def submit_form_modificar():
                         'accion': '',
                         }
                     
-                    #return render_template('modificarExcel.html', data = dataModificarExcel)
-                    return redirect(url_for('modificarExcel', data = dataModificarExcel))
-                    
+                    return render_template('modificarExcel.html', data = dataModificarExcel)
                 
                 if accion == 'eliminarHoja':
                     googleSheet.eliminarHoja(excel['id'], hojaCalculo, sheets_service)
@@ -169,10 +167,7 @@ def submit_form_modificar():
                         'nombreHojaCalculo': '',
                     
                     }
-
-                    
-                    #return render_template('index.html', data = dataModificarExcel)
-                    return redirect(url_for('index', data = dataModificarExcel))
+                    return render_template('index.html', data = dataModificarExcel)
                 
                 else:
                     googleSheet.crearNuevaHoja(excel['id'], hojaCalculo, sheets_service, cliente)
@@ -186,9 +181,8 @@ def submit_form_modificar():
                         'nombreHojaCalculo': '',
                     
                     }
-                    
-                    #return render_template('index.html', data = dataModificarExcel)
-                    return redirect(url_for('index', data = dataModificarExcel))
+
+                    return render_template('index.html', data = dataModificarExcel)
             else:
                 dataModificarExcel = {
                         'estado': '404',
@@ -300,9 +294,7 @@ def submit_form_modificar_p2():
                         'nombreHojaCalculo': '',
                     
                 }
-                
-                #return render_template('index.html', data = dataModificarExcel)
-                return redirect(url_for('index', data = dataModificarExcel))
+                return render_template('index.html', data = dataModificarExcel)
             
             except Exception as e:
                 print(f'Ocurrio un error al intentar agregar nuevas filas. ERROR => {e}')
@@ -352,9 +344,7 @@ def submit_form_modificar_p2():
                     
                     }
 
-                    #return render_template('index.html', data = dataModificarExcel)
-                    return redirect(url_for('index', data = dataModificarExcel))
-                
+                    return render_template('index.html', data = dataModificarExcel)
             except Exception as e:
                 print(f'Ocurrió un error al identificar las filas a elimianr. Error => {e}')  
                 dataModificarExcel = {
