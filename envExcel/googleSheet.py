@@ -83,7 +83,7 @@ def agregarNuevasFilas(excel_id, hoja_trabajo_nombre, filas, cliente):
         # Seleccionar la hoja de trabajo por nombre, por ahora solo agrega en la primera hoja de trabajo
         hojaCalculo = excel.worksheet(hoja_trabajo_nombre)
        
-        # Agregar filas una debajo de otra
+        # Agregar filas una debajo de otra, toma la ultima y lo agrega
         hojaCalculo.append_rows(filas)
         print(f"{len(filas)} filas agregadas en la hoja de cálculo {excel_id}.")
     except Exception as e:

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 import sys
 import os
 import  ast
@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import googleSheet
 
 app = Flask(__name__)
-
+app.secret_key = config('SECRET_KEY')
 
 
 sheets_service = googleSheet.conexionSheetBuildService()
@@ -30,16 +30,21 @@ cliente = googleSheet.conexionDriveCliente()
 
 @app.route('/')
 def index():
-    dataModificarExcel = {
-                    'estado': '',
-                    'error': '',
-                    'siguienteNivel': '',
-                    'excelId': '',
-                    'accion': '',
-                    'nombreHojaCalculo': '',
-                    
-                }
-    return render_template('index.html', data = dataModificarExcel)
+    data = session.get('data', None)
+    print('data => ', data)
+    if data:
+        return render_template('index.html', data = data)
+    else:
+        dataModificarExcel = {
+                        'estado': '',
+                        'error': '',
+                        'siguienteNivel': '',
+                        'excelId': '',
+                        'accion': '',
+                        'nombreHojaCalculo': '',
+                        
+                    }
+        return render_template('index.html', data = dataModificarExcel)
 
 
 @app.route('/verExcel')
@@ -157,17 +162,32 @@ def submit_form_modificar():
                     return render_template('modificarExcel.html', data = dataModificarExcel)
                 
                 if accion == 'eliminarHoja':
-                    googleSheet.eliminarHoja(excel['id'], hojaCalculo, sheets_service)
-                    dataModificarExcel = {
-                        'estado': '200',
-                        'error': '',
-                        'siguienteNivel': '',
-                        'excelId': '',
-                        'accion': 'eliminarHoja',
-                        'nombreHojaCalculo': '',
-                    
-                    }
-                    return render_template('index.html', data = dataModificarExcel)
+                    print('algo => ', googleSheet.eliminarHoja(excel['id'], hojaCalculo, sheets_service))
+                    if googleSheet.eliminarHoja(excel['id'], hojaCalculo, sheets_service) == False:
+                        dataModificarExcel = {
+                            'estado': '404',
+                            'error': 'No existe la hoja a eliminar',
+                            'siguienteNivel': '',
+                            'excelId': '',
+                            'accion': 'eliminarHoja',
+                            'nombreHojaCalculo': '',
+                        
+                        }
+                        return render_template('modificarExcel.html', data = dataModificarExcel)
+                    else:
+                        dataModificarExcel = {
+                            'estado': '200',
+                            'error': '',
+                            'siguienteNivel': '',
+                            'excelId': '',
+                            'accion': 'eliminarHoja',
+                            'nombreHojaCalculo': '',
+                        
+                        }
+                        session['data'] = dataModificarExcel
+
+                        return redirect(url_for('index'))
+                        #return render_template('index.html', data = dataModificarExcel)
                 
                 else:
                     googleSheet.crearNuevaHoja(excel['id'], hojaCalculo, sheets_service, cliente)
@@ -181,8 +201,11 @@ def submit_form_modificar():
                         'nombreHojaCalculo': '',
                     
                     }
+                    
+                    session['data'] = dataModificarExcel
 
-                    return render_template('index.html', data = dataModificarExcel)
+                    return redirect(url_for('index'))
+                    #return render_template('index.html', data = dataModificarExcel)
             else:
                 dataModificarExcel = {
                         'estado': '404',
@@ -294,7 +317,11 @@ def submit_form_modificar_p2():
                         'nombreHojaCalculo': '',
                     
                 }
-                return render_template('index.html', data = dataModificarExcel)
+
+                session['data'] = dataModificarExcel
+
+                return redirect(url_for('index'))
+                #return render_template('index.html', data = dataModificarExcel)
             
             except Exception as e:
                 print(f'Ocurrio un error al intentar agregar nuevas filas. ERROR => {e}')
@@ -343,8 +370,10 @@ def submit_form_modificar_p2():
                         'nombreHojaCalculo': '',
                     
                     }
+                    session['data'] = dataModificarExcel
 
-                    return render_template('index.html', data = dataModificarExcel)
+                    return redirect(url_for('index'))
+                    #return render_template('index.html', data = dataModificarExcel)
             except Exception as e:
                 print(f'Ocurrió un error al identificar las filas a elimianr. Error => {e}')  
                 dataModificarExcel = {
