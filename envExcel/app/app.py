@@ -46,6 +46,11 @@ def index():
                     }
         return render_template('index.html', data = dataModificarExcel)
 
+@app.route('/home')
+def limpiarSesion():
+    session.pop('data', None)
+    return redirect(url_for('index'))
+
 
 @app.route('/verExcel')
 def verExcel():

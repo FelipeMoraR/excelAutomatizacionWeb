@@ -9,6 +9,7 @@
 /* Para eliminar el efecto de fondo azul en dispositivos móviles */
 a {
     -webkit-tap-highlight-color: transparent;
+    color: inherit;
 }
 
 .material-symbols-outlined {
