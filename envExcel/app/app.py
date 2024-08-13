@@ -303,9 +303,12 @@ def submit_form_modificar_p2():
         if accion == 'agregar':
             nombre_gasto = request.form.getlist('nombre_gasto')
             precio_gasto = request.form.getlist('precio_gasto')
+            categoria_gasto = request.form.getlist('categoria_gasto')
 
-            for nombre, precio in zip(nombre_gasto,precio_gasto):
-                filasAgregar.append(nombre.lower())
+
+            for nombre, precio, categoria in zip(nombre_gasto, precio_gasto, categoria_gasto):
+                nombreCategoria = categoria.lower() + '-' + nombre.lower()
+                filasAgregar.append(nombreCategoria)
                 filasAgregar.append(precio.lower())
                 conjutoFilasAgregar.append(filasAgregar.copy())
                 filasAgregar.clear()

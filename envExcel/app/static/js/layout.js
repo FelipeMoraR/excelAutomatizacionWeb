@@ -17,7 +17,39 @@ function addInputAgregar() {
     const botonEliminar = document.createElement("div");
     const spanEliminar = document.createElement("span");
     const nameInput = document.createElement("input");
-
+    const select = document.createElement("select");
+    const opcionesSelect = [
+        {
+            'text':'Supermercado',
+            'value':'super'
+        },
+        {
+            'text':'Fijo',
+            'value':'fijo'
+        },
+        {
+            'text':'Salida',
+            'value':'salida'
+        }, 
+        {
+            'text':'Regalo',
+            'value':'regalo'
+        }, 
+        {
+            'text':'Pasaje',
+            'value':'pasaje'
+        }
+        , 
+        {
+            'text':'Personal',
+            'value':'personal'
+        }
+        ,
+        {
+            'text':'Otro',
+            'value':'otro'
+        }]
+    
     nuevoDiv.className = 'd-flex gap-1'
     nuevoDiv.style.maxHeight = '20px'
     nuevoDiv.style.position = 'relative'
@@ -39,11 +71,22 @@ function addInputAgregar() {
     spanEliminar.className = 'material-symbols-outlined';
     spanEliminar.innerText = 'cancel'
 
+
+    opcionesSelect.forEach(opcion => {
+        const opcionElement = document.createElement('option');
+        opcionElement.value = opcion.value
+        opcionElement.textContent = opcion.text;
+        select.appendChild(opcionElement);
+    })
+    select.classList.add('w-45');
+
+
     botonEliminar.appendChild(spanEliminar);
 
     nuevoDiv.appendChild(nameInput);
     nuevoDiv.appendChild(priceInput);
     nuevoDiv.appendChild(botonEliminar);
+    nuevoDiv.appendChild(select);
     container.appendChild(nuevoDiv);
 
     asignarFuncionBotonEliminar();
