@@ -19,11 +19,19 @@
                     </span>
                 </div>
                 
-                <div class = "d-flex flex-direction-column gap-1">
-                    <h2> URL </h2>
-                    <p> <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> {{dataVerExcel.nombreExcel}} </a> </p>
-                </div>
-                
+                {% if dataVerExcel.urlExcel  == '' %}
+                    <div class = "d-flex flex-direction-column gap-05">
+                        <h2> Gastos </h2>
+                        {% for elemento in dataVerExcel.gastos %}
+                            <p> {{ elemento.nombre }}: ${{ elemento.total }}  </p>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class = "d-flex flex-direction-column gap-1">
+                        <h2> URL </h2>
+                        <p> <a href = "{{dataVerExcel.urlExcel}}" target = "_blank"> {{dataVerExcel.nombreExcel}} </a> </p>
+                    </div>
+                {% endif %}
             </div>
         </div>
         
@@ -53,8 +61,21 @@
                     <label for="nombre">Nombre Excel:</label>
                     <input type="text" id="nombre" name="nombre" required>
                 </div>
-            <div class = "d-flex justify-content-center">
-                    <input type="submit" value="Ver excel">
+
+                <div class = "d-flex  gap-05 font-sm-12">
+                    <label for="verGasto">Ver gastos?</label>
+                    <input type="checkbox" id="verGasto" name="verGasto">
+                </div>
+
+                <div id = "nombreHoja" class = "d-none flex-direction-column gap-05 font-sm-12">
+                    <label for="hoja">Nombre Hoja:</label>
+                    <input type="text" id="hoja" name="hoja">
+                </div>
+
+                
+            <div class = "d-flex justify-content-center gap-4 px-6">
+                    <input type="submit" name = "accion" value="Ver excel">
+                    <input type="submit" id = "accionVerGastos" name = "accion" value="Ver gastos" class = "d-none">
             </div>
                     
             </div>
@@ -71,6 +92,7 @@
 
 {% block scripts %}
     <script src = "{{ url_for('static', filename = 'js/modal.js') }}"> </script>
+    <script src = "{{ url_for('static', filename = 'js/verExcel.js') }}"> </script>
 {% endblock %}
         
 {% endblock %}

@@ -448,14 +448,74 @@ def obtener_url_archivo(id_excel, drive_service):
         return None
 
 
+def obtener_todos_elementos_hoja(excel_id, hoja_trabajo_nombre, cliente):
+    try:
+        # Abrir la hoja de cálculo por ID
+        excel = cliente.open_by_key(excel_id)
+       
+        # Seleccionar la hoja de trabajo por nombre, por ahora solo agrega en la primera hoja de trabajo
+        hoja_calculo = excel.worksheet(hoja_trabajo_nombre)
+       
+        #Encontrar todas las celdas
+        lista_celdas = hoja_calculo.get_all_values()
+
+        
+
+        return lista_celdas
+    except Exception as e:
+        print(f"Ocurrio un error al intentar obtener todos los elementos: {e}")
+
+def limpiar_todos_elementos(elementos):
+    array_obj_limpio = []
+    for e in elementos[1:]:
+        obj = {
+            'nombre': e[0],
+            'precio': e[1]
+        }
+        array_obj_limpio.append(obj)
+
+    return array_obj_limpio
+
+def categorizar_elementos(elementos):
+    categorizado = {}
+
+    for e in elementos:
+        categoria = e['nombre'].split('-')[0]
+        if categoria in categorizado:
+            categorizado[categoria].append(e)
+        else:
+            categorizado[categoria] = [e]
+        
+    return categorizado
+
+def calcular_gastos_categorizados(objeto):
+    gastoCategorizado = {}
+
+    for clave in objeto:
+        gastoCategorizado[clave] = 0
+        for obj in objeto[clave]:
+            precioAntiguo = gastoCategorizado[clave]
+            precio = int(obj['precio'])
+            precioNuevo = precio + precioAntiguo
+            gastoCategorizado[clave] = precioNuevo
+            
+    return gastoCategorizado
+
+def calcular_total_gastos(gastos):
+    total = 0
+    for gasto in gastos:
+        precio = int(gasto['precio'])
+        total = total + precio
+    
+    return total
 # Conexion
 #drive_service = conexionDriveBuildService()
 #sheet_service = conexionSheetBuildService()
 #cliente = conexionDriveCliente()
 
 # Verificar si existe una hoja de cálculo con un nombre específico
-#nombre_excel = "pedrito"
-#nombre_hoja = 'sexito2'
+#nombre_excel = "gastos 2024"
+#nombre_hoja = 'agosto'
 
 
 #rows_to_add = [
@@ -469,7 +529,16 @@ def obtener_url_archivo(id_excel, drive_service):
 
 #print(formatearTodosValoresFilasEliminar(listaDict))
 
+#todosElementos = obtener_todos_elementos_hoja(objeto['id'], nombre_hoja, cliente)
+#todosElementosLimpios = limpiar_todos_elementos(todosElementos)
 
+
+
+#listaCategorizada = categorizar_elementos(todosElementosLimpios)
+#gastosCategorizados = calcular_gastos_categorizados(listaCategorizada)
+#totalGastos = calcular_total_gastos(todosElementosLimpios)
+
+#print('total => ' , totalGastos, 'categorizado => ', gastosCategorizados)
 #print(obtenerHojaCalculo(objeto['id'], nombre_hoja, sheet_service))
 #print(obtener_url_archivo(objeto['id'], drive_service))
 #crearNuevaHoja(objeto['id'], 'sexito2', sheet_service, cliente)

@@ -58,7 +58,8 @@ def verExcel():
     dataVerExcel = {
         'estado': '',
         'nombreExcel': '',
-        'urlExcel': ''
+        'urlExcel': '',
+        'gastos': ''
     }
 
     return render_template('verExcel.html', dataVerExcel = dataVerExcel)
@@ -68,24 +69,75 @@ def verExcel():
 def submit_form_ver():
     if request.method == 'POST':
         nombre = request.form['nombre'].lower()
-        
+        accion = request.form['accion'].lower()
+        print(accion)
         if googleSheet.verificarExistenciaExcel(nombre, drive_service):
             excel = googleSheet.obtenerExcel(nombre, drive_service)
-            urlExcel = googleSheet.obtener_url_archivo(excel['id'], drive_service)
+
+            if(accion == 'ver excel'):
+                urlExcel = googleSheet.obtener_url_archivo(excel['id'], drive_service)        
+                dataVerExcel = {
+                    'estado': '200',
+                    'nombreExcel': nombre,
+                    'urlExcel': urlExcel,
+                    'gastos': ''
+                }
+            else:
+                nombre_hoja = request.form['hoja'].lower()
+
+                if(googleSheet.obtenerHojaCalculo(excel['id'], nombre_hoja, sheets_service) == None):
+                    dataVerExcel = {
+                        'estado': '404',
+                        'nombreExcel': '',
+                        'urlExcel': '',
+                        'gastos': ''
+                    }
+
+                    return render_template('verExcel.html', dataVerExcel = dataVerExcel)
+                
+                todosElementos = googleSheet.obtener_todos_elementos_hoja(excel['id'], nombre_hoja, cliente)
+                todosElementosLimpios = googleSheet.limpiar_todos_elementos(todosElementos)
+                listaCategorizada = googleSheet.categorizar_elementos(todosElementosLimpios)
+                totalGastosCategorizados = googleSheet.calcular_gastos_categorizados(listaCategorizada)
+                totalGastos = googleSheet.calcular_total_gastos(todosElementosLimpios)
+                totalGastosCategorizadosArr = []
+
+                totalGastosCategorizadosArr.append(
+                    {
+                        'nombre': 'Gasto Total',
+                        'total': totalGastos
+                    }
+                )
+                for e in totalGastosCategorizados:
+                    obj = {
+                        'nombre': e,
+                        'total': totalGastosCategorizados[e]
+                    }
+                    totalGastosCategorizadosArr.append(obj)
+                
+                dataVerExcel = {
+
+                    'estado': '200',
+                    'nombreExcel': 'gastos',
+                    'urlExcel': '',
+                    'gastos': totalGastosCategorizadosArr
+                }
+
+                
+
             
-            dataVerExcel = {
-                'estado': '200',
-                'nombreExcel': nombre,
-                'urlExcel': urlExcel
-            }
         else:
             dataVerExcel = {
                 'estado': '404',
                 'nombreExcel': '',
-                'urlExcel': ''
+                'urlExcel': '',
+                'gastos': ''
             }
 
         return render_template('verExcel.html', dataVerExcel = dataVerExcel)
+        
+
+        
        
         
         
