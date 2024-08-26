@@ -21,6 +21,7 @@ a {
 }
 
 .material-symbols-outlined {
+    cursor: pointer;
     font-variation-settings:
     'FILL' 0,
     'wght' 700,
@@ -250,6 +251,7 @@ input[type = "submit"]:active{
     padding: 8px 4px;
     margin-top: 16px;
     border: 5px solid #415434;
+    cursor: pointer;
 }
 
 
@@ -329,6 +331,7 @@ input[type = "submit"]:active{
     top: 0;
     max-width: 20px;
     max-height: 20px;
+    cursor: pointer;
 }
 
 .eliminar_gasto span{

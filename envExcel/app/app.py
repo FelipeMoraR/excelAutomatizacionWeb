@@ -280,8 +280,7 @@ def submit_form_modificar():
         else:
             if googleSheet.verificarExistenciaExcel(nombreExcel, drive_service):
                 excel = googleSheet.obtenerExcel(nombreExcel, drive_service)
-                listaDict = googleSheet.identificarTodosValoresFilasEliminar(excel['id'], hojaCalculo, cliente)
-                print('lista => ', listaDict)
+                
 
                 if googleSheet.obtenerHojaCalculo(excel['id'], hojaCalculo, sheets_service) == None:
                     print('No se encontró nada')
@@ -295,7 +294,10 @@ def submit_form_modificar():
                         }
                     
                     return render_template('modificarExcel.html', data = dataModificarExcel)
-
+                
+                listaDict = googleSheet.identificarTodosValoresFilasEliminar(excel['id'], hojaCalculo, cliente)
+                print('lista => ', listaDict)
+                
                 if accion == 'eliminar' and len(listaDict) == 0:
                     dataModificarExcel = {
                         'estado': '204',

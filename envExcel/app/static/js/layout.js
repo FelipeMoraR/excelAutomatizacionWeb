@@ -36,6 +36,10 @@ function addInputAgregar() {
             'value':'regalo'
         }, 
         {
+            'text':'Comida',
+            'value':'comida'
+        },
+        {
             'text':'Pasaje',
             'value':'pasaje'
         }
@@ -78,15 +82,16 @@ function addInputAgregar() {
         opcionElement.textContent = opcion.text;
         select.appendChild(opcionElement);
     })
-    select.classList.add('w-45');
-
+    select.className = "w-45";
+    select.required = true;
+    select.name = "categoria_gasto"
 
     botonEliminar.appendChild(spanEliminar);
 
     nuevoDiv.appendChild(nameInput);
     nuevoDiv.appendChild(priceInput);
-    nuevoDiv.appendChild(botonEliminar);
     nuevoDiv.appendChild(select);
+    nuevoDiv.appendChild(botonEliminar);
     container.appendChild(nuevoDiv);
 
     asignarFuncionBotonEliminar();
