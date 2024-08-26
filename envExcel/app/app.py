@@ -465,15 +465,6 @@ def submit_form_modificar_p2():
 
 
 
-#Este es un ejemplo
-@app.route('/contacto/<nombre>/<int:edad>')
-def contacto(nombre, edad):
-    data = {
-        'titulo': 'contacto',
-        'nombre': nombre,
-        'edad': edad
-    }
-    return render_template('contacto.html', data = data)
 
 def query_string():
     print(request)
