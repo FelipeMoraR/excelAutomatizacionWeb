@@ -461,78 +461,7 @@ def submit_form_modificar_p2():
 
 
 
-@app.route('/submit_form_modificar_p3', methods=['POST'])
-def submit_form_modificar_p3():
 
-    if request.method == 'POST':
-        id_excel = request.form['id_excel']
-        nombre_hoja = request.form['nombre_hoja']
-        accion = request.form['accion']
-        filasEliminar = request.form['filasEliminar'] #Aqui llega como string
-        arrayFilasEliminar = ast.literal_eval(filasEliminar)
-        posicion_gasto = int(request.form['posicion_gasto'])
-        lista_gasto = request.form['lista_gastos']
-        array_lista_gastos = ast.literal_eval(lista_gasto)
-        try:
-            arrayFilasEliminar[posicion_gasto]
-        except:
-            dataModificarExcel = {
-                    'estado': '400',
-                    'error': 'Error al realizar la eliminacion, valor fuera del rango',
-                    'siguienteNivel': '2',
-                    'excelId': id_excel,
-                    'accion': accion,
-                    'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': array_lista_gastos
-                    
-                }
-            return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
-            
-
-        try:
-            estadoEliminar = googleSheet.eliminarFilas(id_excel, nombre_hoja, arrayFilasEliminar, posicion_gasto, cliente)
-            
-            if estadoEliminar == False:
-                dataModificarExcel = {
-                    'estado': '404',
-                    'error': 'Error al eliminar un elemento',
-                    'siguienteNivel': '1',
-                    'excelId': id_excel,
-                    'accion': accion,
-                    'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': array_lista_gastos
-                    
-                }
-
-                return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
-
-            dataModificarExcel = {
-                    'estado': '200',
-                    'error': '',
-                    'siguienteNivel': '1',
-                    'excelId': '',
-                    'accion': 'eliminar',
-                    'nombreHojaCalculo': '',
-                    
-                }
-            
-            return render_template('index.html', data = dataModificarExcel)
-            
-        except Exception as e:
-            print('ERROR AL ELIMINAR ESTA VAINA => ', e)
-            dataModificarExcel = {
-                    'estado': '400',
-                    'error': 'Error al realizar la eliminacion',
-                    'siguienteNivel': '2',
-                    'excelId': id_excel,
-                    'accion': accion,
-                    'nombreHojaCalculo': nombre_hoja,
-                    'listaGastos': array_lista_gastos
-                    
-                }
-            return render_template('modificarExcelPaso2.html', data = dataModificarExcel)
-            
-    return 'Error al enviar el formulario'
 
 
 
